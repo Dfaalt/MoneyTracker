@@ -3,6 +3,7 @@ import { useFinance } from '../context/FinanceContext';
 import { formatRupiah, formatMonthYear } from '../lib/utils';
 import { CategoryDonutChart } from '../components/dashboard/CategoryDonutChart';
 import { DailyExpenseBarChart } from '../components/dashboard/DailyExpenseBarChart';
+import { ExportDropdown } from '../components/common/ExportDropdown';
 import { PieChart as PieIcon } from 'lucide-react';
 
 export const ReportsPage: React.FC = () => {
@@ -18,11 +19,17 @@ export const ReportsPage: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in pb-16">
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-extrabold text-white tracking-tight">Financial Reports & Insights</h2>
-        <p className="text-xs text-slate-400 mt-0.5">
-          Analisis mendalam pola pengeluaran dan pemasukan periode {formatMonthYear(selectedMonth)}
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-extrabold text-white tracking-tight">Financial Reports & Insights</h2>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Analisis mendalam pola pengeluaran dan pemasukan periode {formatMonthYear(selectedMonth)}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <ExportDropdown label="Export Laporan" />
+        </div>
       </div>
 
       {/* Key Metric Highlights */}

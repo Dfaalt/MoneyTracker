@@ -7,6 +7,7 @@ import { TransactionCardList } from '../components/transactions/TransactionCardL
 import { TransactionModal } from '../components/transactions/TransactionModal';
 import { ConfirmDialog } from '../components/common/ConfirmDialog';
 import { EmptyState } from '../components/common/EmptyState';
+import { ExportDropdown } from '../components/common/ExportDropdown';
 import { formatRupiah, formatMonthYear } from '../lib/utils';
 import { Plus, ArrowUpDown } from 'lucide-react';
 
@@ -92,7 +93,9 @@ export const TransactionsPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-2.5">
+          <ExportDropdown label="Export" />
+
           <button
             onClick={() => setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
             className="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-1.5 transition-colors"
