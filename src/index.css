@@ -100,3 +100,69 @@
 .numeric-font {
   font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
 }
+
+/* Dynamic Multi-Theme Accents */
+:root, [data-theme="emerald"] {
+  --color-primary: #10b981;
+  --color-primary-dark: #059669;
+  --color-primary-light: #34d399;
+  --color-primary-bg: rgba(16, 185, 129, 0.14);
+  --color-primary-border: rgba(16, 185, 129, 0.3);
+  --color-primary-glow: rgba(16, 185, 129, 0.4);
+  --gradient-primary: linear-gradient(to right, #059669, #0d9488);
+  --gradient-primary-hover: linear-gradient(to right, #10b981, #14b8a6);
+}
+
+[data-theme="blue"] {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-primary-bg: rgba(59, 130, 246, 0.14);
+  --color-primary-border: rgba(59, 130, 246, 0.3);
+  --color-primary-glow: rgba(59, 130, 246, 0.4);
+  --gradient-primary: linear-gradient(to right, #2563eb, #0284c7);
+  --gradient-primary-hover: linear-gradient(to right, #3b82f6, #38bdf8);
+}
+
+[data-theme="indigo"] {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #818cf8;
+  --color-primary-bg: rgba(99, 102, 241, 0.14);
+  --color-primary-border: rgba(99, 102, 241, 0.3);
+  --color-primary-glow: rgba(99, 102, 241, 0.4);
+  --gradient-primary: linear-gradient(to right, #4f46e5, #7c3aed);
+  --gradient-primary-hover: linear-gradient(to right, #6366f1, #8b5cf6);
+}
+
+[data-theme="amber"] {
+  --color-primary: #f59e0b;
+  --color-primary-dark: #d97706;
+  --color-primary-light: #fbbf24;
+  --color-primary-bg: rgba(245, 158, 11, 0.14);
+  --color-primary-border: rgba(245, 158, 11, 0.3);
+  --color-primary-glow: rgba(245, 158, 11, 0.4);
+  --gradient-primary: linear-gradient(to right, #d97706, #ea580c);
+  --gradient-primary-hover: linear-gradient(to right, #f59e0b, #f97316);
+}
+
+/* Dynamic theme helper classes */
+.bg-theme-btn {
+  background-image: var(--gradient-primary) !important;
+}
+.bg-theme-btn:hover {
+  background-image: var(--gradient-primary-hover) !important;
+}
+.text-theme {
+  color: var(--color-primary) !important;
+}
+.border-theme {
+  border-color: var(--color-primary-border) !important;
+}
+.bg-theme-soft {
+  background-color: var(--color-primary-bg) !important;
+}
+.shadow-glow-theme {
+  box-shadow: 0 0 20px -5px var(--color-primary-glow) !important;
+}
+

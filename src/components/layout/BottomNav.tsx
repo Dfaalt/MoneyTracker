@@ -18,7 +18,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <button
           onClick={() => onNavigate('dashboard')}
           className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'dashboard' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+            activePage === 'dashboard' ? 'text-theme font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
@@ -29,7 +29,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <button
           onClick={() => onNavigate('transactions')}
           className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'transactions' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+            activePage === 'transactions' ? 'text-theme font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <Receipt className="w-5 h-5" />
@@ -40,7 +40,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <div className="relative -top-5">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-xl shadow-emerald-950/80 border-4 border-[#0D131F] flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+            className="w-13 h-13 p-3.5 rounded-full bg-theme-btn text-white shadow-xl shadow-black/80 border-4 border-[#0D131F] flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-glow-theme"
             title="Quick Add Transaction"
           >
             <Plus className="w-6 h-6 stroke-[3]" />
@@ -51,7 +51,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <button
           onClick={() => onNavigate('budget')}
           className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'budget' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+            activePage === 'budget' ? 'text-theme font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <Target className="w-5 h-5" />
@@ -62,7 +62,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <button
           onClick={() => onNavigate('reports')}
           className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'reports' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+            activePage === 'reports' ? 'text-theme font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <BarChart2 className="w-5 h-5" />
