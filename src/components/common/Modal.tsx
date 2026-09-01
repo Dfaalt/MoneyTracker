@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 interface ModalProps {
@@ -43,23 +44,23 @@ export const Modal: React.FC<ModalProps> = ({
     xl: 'max-w-xl',
   }[maxWidth];
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+  const modalContent = (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity animate-fade-in"
+        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity animate-fade-in"
         onClick={onClose}
       />
 
       {/* Modal Card */}
       <div
-        className={`relative w-full ${maxWidthClass} rounded-2xl glass-modal shadow-2xl border border-slate-700/60 p-6 z-10 animate-scale-in text-slate-100 my-auto`}
+        className={`relative w-full ${maxWidthClass} max-h-[92vh] sm:max-h-[88vh] flex flex-col rounded-2xl glass-modal shadow-2xl border border-slate-700/60 p-4 sm:p-6 z-10 animate-scale-in text-slate-100 my-auto`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-start justify-between pb-3.5 border-b border-slate-800 shrink-0">
           <div>
-            <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">{title}</h3>
             {subtitle && <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>}
           </div>
           <button
@@ -71,8 +72,10 @@ export const Modal: React.FC<ModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="pt-4">{children}</div>
+        <div className="pt-3.5 flex-1 overflow-y-auto pr-0.5">{children}</div>
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };

@@ -100,7 +100,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
               : 'No transactions yet.'
           }
           description="Start tracking your money today and see real-time updates."
-          actionLabel="+ Add Transaction"
+          actionLabel="Add Transaction"
           onAction={() => setIsAddModalOpen(true)}
         />
       ) : (

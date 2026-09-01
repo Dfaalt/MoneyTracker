@@ -25,7 +25,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     defaultIcon = Wallet;
     defaultTitle = 'No transactions yet.';
     defaultDesc = 'Start tracking your money today and take control of your financial freedom.';
-    defaultAction = '+ Add Transaction';
+    defaultAction = 'Add Transaction';
   } else if (type === 'budget') {
     defaultIcon = Wallet;
     defaultTitle = 'No budget set for this month.';

@@ -151,7 +151,7 @@ export const TransactionsPage: React.FC = () => {
               ? `Tidak ditemukan transaksi untuk kata kunci "${searchQuery}".`
               : 'Start tracking your money today.'
           }
-          actionLabel={searchQuery ? 'Clear Filters' : '+ Add Transaction'}
+          actionLabel={searchQuery ? 'Clear Filters' : 'Add Transaction'}
           onAction={searchQuery ? handleResetFilters : () => setIsAddModalOpen(true)}
         />
       ) : (
