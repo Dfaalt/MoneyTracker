@@ -19,15 +19,9 @@ function getLocalTransactions(userId: string): Transaction[] {
     }
     const all = JSON.parse(raw) as Transaction[];
     if (userId.startsWith('demo-')) {
-      // Ensure all months from INITIAL_DEMO_TRANSACTIONS are present
-      const existingIds = new Set(all.map((t) => t.id));
-      const merged = [...all];
-      INITIAL_DEMO_TRANSACTIONS.forEach((demoTx) => {
-        if (!existingIds.has(demoTx.id)) {
-          merged.push(demoTx);
-        }
-      });
-      return merged;
+      const userCustomTx = all.filter((t) => !t.id.startsWith('demo-tx-'));
+      // Combine user's custom added transactions with latest demo seed
+      return [...userCustomTx, ...INITIAL_DEMO_TRANSACTIONS];
     }
     return all.filter((t) => t.user_id === userId);
   } catch {

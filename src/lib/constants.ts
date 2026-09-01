@@ -118,8 +118,8 @@ export const generateDemoTransactions = (): Transaction[] => {
         });
       }
 
-      // Always add monthly Salary on day 25
-      const salaryDate = `${monthStr}-25`;
+      // Always add monthly Salary on day 3
+      const salaryDate = `${monthStr}-03`;
       transactions.push({
         id: `demo-tx-${monthStr}-sal`,
         user_id: 'demo-user-123',
