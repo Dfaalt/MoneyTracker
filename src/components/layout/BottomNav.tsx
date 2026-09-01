@@ -46,10 +46,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
         <div className="flex items-center justify-center relative">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-xl shadow-emerald-950/80 border-4 border-[#0D131F] flex items-center justify-center absolute -top-5 hover:scale-105 active:scale-95 transition-all"
-            title="Tambah Transaksi"
+            className="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-2xl shadow-black/80 border-4 border-[#0B0F17] flex items-center justify-center absolute -top-8 hover:scale-105 active:scale-95 transition-all"
+            title="Tambah Transaksi Baru"
           >
-            <Plus className="w-6 h-6 stroke-[3]" />
+            <Plus className="w-7 h-7 stroke-[2.5]" />
           </button>
         </div>
 
