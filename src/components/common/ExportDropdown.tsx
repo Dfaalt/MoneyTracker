@@ -6,10 +6,12 @@ import { Download, FileSpreadsheet, FileText, ChevronDown } from 'lucide-react';
 
 interface ExportDropdownProps {
   label?: string;
+  align?: 'left' | 'right' | 'auto';
 }
 
 export const ExportDropdown: React.FC<ExportDropdownProps> = ({
   label = 'Export Report',
+  align = 'auto',
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isExporting, setIsExporting] = useState<string | null>(null);
@@ -83,6 +85,13 @@ export const ExportDropdown: React.FC<ExportDropdownProps> = ({
     }
   };
 
+  const alignClass = 
+    align === 'left' 
+      ? 'left-0' 
+      : align === 'right' 
+      ? 'right-0' 
+      : 'left-0 sm:left-auto sm:right-0';
+
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Trigger Button */}
@@ -101,7 +110,7 @@ export const ExportDropdown: React.FC<ExportDropdownProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 rounded-2xl glass-modal border border-slate-700/80 shadow-2xl p-1.5 z-40 animate-scale-in">
+        <div className={`absolute ${alignClass} mt-2 w-64 sm:w-72 max-w-[calc(100vw-32px)] rounded-2xl glass-modal border border-slate-700/80 shadow-2xl p-1.5 z-40 animate-scale-in`}>
           <div className="px-3 py-2 border-b border-slate-800/80 mb-1">
             <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
               Pilihan Format Export
