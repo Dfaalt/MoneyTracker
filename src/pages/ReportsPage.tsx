@@ -57,7 +57,7 @@ export const ReportsPage: React.FC = () => {
             {savingsRate}%
           </h4>
           <p className="text-xs text-slate-400">
-            {savingsRate >= 20 ? '🎉 Pola tabungan sangat baik' : '⚠️ Tingkatkan alokasi tabungan'}
+            {savingsRate >= 20 ? 'Pola tabungan sangat baik' : '⚠️ Tingkatkan alokasi tabungan'}
           </p>
         </div>
 
