@@ -131,7 +131,7 @@ export const AuthPage: React.FC = () => {
             Money<span className="text-emerald-400">Tracker</span>
           </h1>
           <p className="text-sm text-slate-400 max-w-xs mx-auto">
-            Track your money without making money tracking complicated.
+            Simply Track your money.
           </p>
         </div>
 
@@ -253,34 +253,16 @@ export const AuthPage: React.FC = () => {
           ) : (
             /* Normal Login / Register Form */
             <>
-              {/* Tab Switcher */}
-              <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-900/90 rounded-2xl border border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsRegister(false);
-                    setError('');
-                  }}
-                  className={`py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${!isRegister
-                    ? 'bg-slate-800 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                >
-                  Sign In
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsRegister(true);
-                    setError('');
-                  }}
-                  className={`py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${isRegister
-                    ? 'bg-slate-800 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                >
-                  Register
-                </button>
+              {/* Form Title & Subtitle */}
+              <div className="space-y-1">
+                <h2 className="text-xl font-bold text-white tracking-tight">
+                  {isRegister ? 'Create an Account' : 'Sign In to Your Account'}
+                </h2>
+                <p className="text-xs text-slate-400">
+                  {isRegister
+                    ? 'Daftar untuk mulai mengelola keuangan pribadi Anda'
+                    : 'Masuk dengan email & password yang sudah terdaftar'}
+                </p>
               </div>
 
               {/* Form */}
@@ -359,6 +341,39 @@ export const AuthPage: React.FC = () => {
                   <span>{isLoading ? 'Processing...' : isRegister ? 'Create Account' : 'Sign In'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
+
+                {/* Account Switcher Link */}
+                <div className="text-center pt-1.5">
+                  {isRegister ? (
+                    <p className="text-xs text-slate-400">
+                      Already have an account?{' '}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsRegister(false);
+                          setError('');
+                        }}
+                        className="text-emerald-400 font-semibold hover:text-emerald-300 hover:underline transition-colors ml-1"
+                      >
+                        Sign In
+                      </button>
+                    </p>
+                  ) : (
+                    <p className="text-xs text-slate-400">
+                      Don't have an account?{' '}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsRegister(true);
+                          setError('');
+                        }}
+                        className="text-emerald-400 font-semibold hover:text-emerald-300 hover:underline transition-colors ml-1"
+                      >
+                        Create Account
+                      </button>
+                    </p>
+                  )}
+                </div>
               </form>
 
               {/* Quick Demo Login Option */}
