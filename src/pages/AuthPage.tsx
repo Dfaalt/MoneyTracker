@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import {
   Wallet,
-  Sparkles,
   Lock,
   Mail,
   User,
@@ -199,8 +198,8 @@ export const AuthPage: React.FC = () => {
                 {/* Resend Status / Feedback */}
                 {resendStatus && (
                   <p className={`text-xs p-2.5 rounded-xl border ${resendStatus.startsWith('Gagal')
-                      ? 'bg-rose-500/10 border-rose-500/20 text-rose-300'
-                      : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium'
+                    ? 'bg-rose-500/10 border-rose-500/20 text-rose-300'
+                    : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium'
                     }`}>
                     {resendStatus}
                   </p>
@@ -263,8 +262,8 @@ export const AuthPage: React.FC = () => {
                     setError('');
                   }}
                   className={`py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${!isRegister
-                      ? 'bg-slate-800 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-slate-800 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-slate-200'
                     }`}
                 >
                   Sign In
@@ -276,8 +275,8 @@ export const AuthPage: React.FC = () => {
                     setError('');
                   }}
                   className={`py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${isRegister
-                      ? 'bg-slate-800 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-slate-800 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-slate-200'
                     }`}
                 >
                   Register
@@ -370,7 +369,6 @@ export const AuthPage: React.FC = () => {
                   onClick={loginAsDemo}
                   className="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-emerald-400 font-semibold text-xs border border-emerald-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
                 >
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
                   <span>Explore as Demo User (Instant)</span>
                 </button>
               </div>

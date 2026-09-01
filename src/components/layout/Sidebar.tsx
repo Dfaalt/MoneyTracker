@@ -6,7 +6,6 @@ import {
   BarChart2,
   LogOut,
   Wallet,
-  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -54,11 +53,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                  isActive
+                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${isActive
                     ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-emerald-400 border border-emerald-500/30 shadow-sm'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                }`}
+                  }`}
               >
                 <Icon className={`w-5 h-5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
@@ -75,7 +73,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
       <div className="pt-6 border-t border-slate-800/80 space-y-4">
         {isDemo && (
           <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 flex-shrink-0 text-amber-400" />
             <span className="leading-tight">Demo Mode: Data disimpan lokal di browser.</span>
           </div>
         )}

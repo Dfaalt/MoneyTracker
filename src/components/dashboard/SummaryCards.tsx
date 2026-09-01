@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { formatRupiah } from '../../lib/utils';
-import { TrendingUp, TrendingDown, Wallet, Target, Sparkles } from 'lucide-react';
+import { TrendingUp, TrendingDown, Wallet, Target } from 'lucide-react';
 
 export const SummaryCards: React.FC = () => {
   const { summary } = useFinance();
@@ -42,7 +42,6 @@ export const SummaryCards: React.FC = () => {
             {formatRupiah(summary.income)}
           </h3>
           <p className="text-xs text-emerald-400 flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5" />
             <span>Pemasukan Bulan Ini</span>
           </p>
         </div>
