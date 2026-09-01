@@ -9,14 +9,14 @@ export const Header: React.FC = () => {
   const { isDemo } = useAuth();
 
   return (
-    <header className="sticky top-0 z-20 bg-[#0B0F17]/80 backdrop-blur-xl border-b border-slate-800/80 px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-20 bg-[#0B0F17]/80 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-4">
       {/* Mobile Brand / Page Indicator */}
-      <div className="flex items-center gap-3">
-        <div className="lg:hidden flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-glow-emerald">
-            <Wallet className="w-4 h-4" />
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
+        <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-glow-emerald shrink-0">
+            <Wallet className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </div>
-          <span className="font-extrabold text-white text-base tracking-tight">
+          <span className="font-extrabold text-white text-sm sm:text-base tracking-tight truncate">
             Money<span className="text-emerald-400">Tracker</span>
           </span>
         </div>
@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Month Selector in Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <MonthSelector />
 
         {/* Desktop Quick Add Button (PRD Section 8.4) */}

@@ -12,61 +12,73 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
   const { setIsAddModalOpen } = useFinance();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#0D131F]/95 border-t border-slate-800/90 backdrop-blur-xl px-2 py-2 safe-area-pb">
-      <div className="flex items-center justify-around relative">
-        {/* Home / Dashboard */}
+    <nav className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#0D131F]/95 border-t border-slate-800/90 backdrop-blur-xl px-1 pt-1.5 pb-2.5">
+      <div className="grid grid-cols-5 items-center w-full max-w-md mx-auto relative">
+        {/* 1. Home / Dashboard */}
         <button
           onClick={() => onNavigate('dashboard')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'dashboard' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
+            activePage === 'dashboard' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
-          <span className="text-[10px] font-medium">Home</span>
+          <span className="text-[10px] tracking-tight">Home</span>
+          {activePage === 'dashboard' && (
+            <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
+          )}
         </button>
 
-        {/* Transactions */}
+        {/* 2. Transactions */}
         <button
           onClick={() => onNavigate('transactions')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'transactions' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
+            activePage === 'transactions' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <Receipt className="w-5 h-5" />
-          <span className="text-[10px] font-medium">Trans.</span>
+          <span className="text-[10px] tracking-tight">Trans.</span>
+          {activePage === 'transactions' && (
+            <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
+          )}
         </button>
 
-        {/* Floating Action Button (PRD Section 8.4 & 14) */}
-        <div className="relative -top-5">
+        {/* 3. Floating Action Button (+) */}
+        <div className="flex items-center justify-center relative">
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-xl shadow-emerald-950/80 border-4 border-[#0D131F] flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
-            title="Quick Add Transaction"
+            className="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-xl shadow-emerald-950/80 border-4 border-[#0D131F] flex items-center justify-center absolute -top-5 hover:scale-105 active:scale-95 transition-all"
+            title="Tambah Transaksi"
           >
             <Plus className="w-6 h-6 stroke-[3]" />
           </button>
         </div>
 
-        {/* Budget */}
+        {/* 4. Budget */}
         <button
           onClick={() => onNavigate('budget')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'budget' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
+            activePage === 'budget' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <Target className="w-5 h-5" />
-          <span className="text-[10px] font-medium">Budget</span>
+          <span className="text-[10px] tracking-tight">Budget</span>
+          {activePage === 'budget' && (
+            <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
+          )}
         </button>
 
-        {/* Reports */}
+        {/* 5. Reports */}
         <button
           onClick={() => onNavigate('reports')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
-            activePage === 'reports' ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
+            activePage === 'reports' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
           <BarChart2 className="w-5 h-5" />
-          <span className="text-[10px] font-medium">Reports</span>
+          <span className="text-[10px] tracking-tight">Reports</span>
+          {activePage === 'reports' && (
+            <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
+          )}
         </button>
       </div>
     </nav>

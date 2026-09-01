@@ -60,16 +60,21 @@ export function formatDate(dateString: string, format: 'short' | 'medium' | 'ful
 }
 
 /**
- * Format 'YYYY-MM' to readable month name and year e.g. "August 2026"
+ * Format 'YYYY-MM' to readable month name and year e.g. "August 2026" or "Aug 2026"
  */
-export function formatMonthYear(monthStr: string): string {
+export function formatMonthYear(monthStr: string, short: boolean = false): string {
   if (!monthStr) return '';
   const [year, month] = monthStr.split('-').map(Number);
   const monthsFull = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  return `${monthsFull[(month - 1) || 0]} ${year || 2026}`;
+  const monthsShort = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  const list = short ? monthsShort : monthsFull;
+  return `${list[(month - 1) || 0]} ${year || 2026}`;
 }
 
 /**
