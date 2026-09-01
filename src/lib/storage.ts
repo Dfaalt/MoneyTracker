@@ -18,8 +18,18 @@ function getLocalTransactions(userId: string): Transaction[] {
       return INITIAL_DEMO_TRANSACTIONS;
     }
     const all = JSON.parse(raw) as Transaction[];
-    // Filter for current user or demo user
-    return all.filter((t) => t.user_id === userId || userId.startsWith('demo-'));
+    if (userId.startsWith('demo-')) {
+      // Ensure all months from INITIAL_DEMO_TRANSACTIONS are present
+      const existingIds = new Set(all.map((t) => t.id));
+      const merged = [...all];
+      INITIAL_DEMO_TRANSACTIONS.forEach((demoTx) => {
+        if (!existingIds.has(demoTx.id)) {
+          merged.push(demoTx);
+        }
+      });
+      return merged;
+    }
+    return all.filter((t) => t.user_id === userId);
   } catch {
     return INITIAL_DEMO_TRANSACTIONS;
   }
@@ -41,7 +51,17 @@ function getLocalBudgets(userId: string): Budget[] {
       return INITIAL_DEMO_BUDGETS;
     }
     const all = JSON.parse(raw) as Budget[];
-    return all.filter((b) => b.user_id === userId || userId.startsWith('demo-'));
+    if (userId.startsWith('demo-')) {
+      const existingMonths = new Set(all.map((b) => b.month));
+      const merged = [...all];
+      INITIAL_DEMO_BUDGETS.forEach((demoB) => {
+        if (!existingMonths.has(demoB.month)) {
+          merged.push(demoB);
+        }
+      });
+      return merged;
+    }
+    return all.filter((b) => b.user_id === userId);
   } catch {
     return INITIAL_DEMO_BUDGETS;
   }

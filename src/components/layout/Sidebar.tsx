@@ -32,12 +32,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
       <div className="space-y-8">
         {/* Brand Logo */}
         <div className="flex items-center gap-3 px-2">
-          <div className="w-10 h-10 rounded-2xl bg-theme-btn flex items-center justify-center text-white shadow-glow-theme">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-glow-emerald">
             <Wallet className="w-5 h-5" />
           </div>
           <div>
             <h1 className="text-lg font-extrabold text-white tracking-tight leading-none">
-              Money<span className="text-theme">Tracker</span>
+              Money<span className="text-emerald-400">Tracker</span>
             </h1>
             <p className="text-[10px] text-slate-400 font-medium mt-0.5 uppercase tracking-wider">
               Smart Finance
@@ -56,14 +56,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
                 onClick={() => onNavigate(item.id)}
                 className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                   isActive
-                    ? 'bg-theme-soft text-theme border border-theme shadow-sm'
+                    ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-emerald-400 border border-emerald-500/30 shadow-sm'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-theme' : 'text-slate-400'}`} />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
                 {isActive && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-theme-primary shadow-glow-theme" style={{ backgroundColor: 'var(--color-primary)' }} />
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-glow-emerald" />
                 )}
               </button>
             );
@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
 
         <div className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-slate-800">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full bg-theme-soft text-theme border border-theme flex items-center justify-center font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-xs">
               {user?.name?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="min-w-0">

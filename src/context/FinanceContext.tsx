@@ -10,7 +10,7 @@ import {
 } from '../types';
 import { storageService } from '../lib/storage';
 import { useAuth } from './AuthContext';
-import { calculateBudgetStatus, formatDate } from '../lib/utils';
+import { calculateBudgetStatus, formatDate, getMonthKey } from '../lib/utils';
 import { ALL_CATEGORIES } from '../lib/constants';
 
 interface FinanceContextType {
@@ -54,8 +54,8 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const { user } = useAuth();
   const userId = user?.id || 'demo-user-123';
 
-  // Default month: '2026-08' to showcase the PRD scenario perfectly
-  const [selectedMonth, setSelectedMonth] = useState<string>('2026-08');
+  // Automatically initialize to the real-time current month (YYYY-MM)
+  const [selectedMonth, setSelectedMonth] = useState<string>(() => getMonthKey());
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

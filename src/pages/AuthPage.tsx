@@ -16,8 +16,6 @@ import {
   Inbox
 } from 'lucide-react';
 
-import { ThemeSwitcher } from '../components/common/ThemeSwitcher';
-
 export const AuthPage: React.FC = () => {
   const { login, register, resendConfirmation, loginAsDemo } = useAuth();
   const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -120,23 +118,18 @@ export const AuthPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0F17] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Top right theme switcher */}
-      <div className="absolute top-4 right-4 z-20">
-        <ThemeSwitcher />
-      </div>
-
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-theme-soft rounded-full blur-3xl pointer-events-none opacity-60" />
+      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="w-full max-w-md space-y-6 relative z-10 animate-fade-in">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-theme-btn text-white shadow-glow-theme mb-2">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white shadow-glow-emerald mb-2">
             <Wallet className="w-7 h-7" />
           </div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
-            Money<span className="text-theme">Tracker</span>
+            Money<span className="text-emerald-400">Tracker</span>
           </h1>
           <p className="text-sm text-slate-400 max-w-xs mx-auto">
             Track your money without making money tracking complicated.
@@ -362,7 +355,7 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3 rounded-xl bg-theme-btn text-white font-bold text-sm shadow-lg shadow-black/40 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-950/50 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   <span>{isLoading ? 'Processing...' : isRegister ? 'Create Account' : 'Sign In'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -375,9 +368,9 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={loginAsDemo}
-                  className="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-theme font-semibold text-xs border border-theme flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                  className="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-emerald-400 font-semibold text-xs border border-emerald-500/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
                 >
-                  <Sparkles className="w-4 h-4 text-theme" />
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
                   <span>Explore as Demo User (Instant)</span>
                 </button>
               </div>
@@ -388,15 +381,15 @@ export const AuthPage: React.FC = () => {
         {/* Feature Highlights */}
         <div className="grid grid-cols-3 gap-2 text-center text-[11px] text-slate-400">
           <div className="flex items-center justify-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-theme" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
             <span>Fast CRUD</span>
           </div>
           <div className="flex items-center justify-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-theme" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
             <span>Live Budget</span>
           </div>
           <div className="flex items-center justify-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-theme" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
             <span>Visual Charts</span>
           </div>
         </div>
