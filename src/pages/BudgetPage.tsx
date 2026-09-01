@@ -78,9 +78,8 @@ export const BudgetPage: React.FC = () => {
             <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col items-center justify-center min-w-[200px] text-center space-y-1">
               <span className="text-xs text-slate-400 uppercase font-semibold">Remaining</span>
               <span
-                className={`text-2xl font-bold font-mono ${
-                  currentBudgetAmount - currentSpent < 0 ? 'text-rose-400' : 'text-emerald-400'
-                }`}
+                className={`text-2xl font-bold font-mono ${currentBudgetAmount - currentSpent < 0 ? 'text-rose-400' : 'text-emerald-400'
+                  }`}
               >
                 {formatRupiah(currentBudgetAmount - currentSpent)}
               </span>
@@ -101,7 +100,7 @@ export const BudgetPage: React.FC = () => {
               />
             </div>
             <p className="text-xs text-slate-400 font-medium">
-              💡 {currentConfig.message}
+              {currentConfig.message}
             </p>
           </div>
         )}
@@ -126,9 +125,8 @@ export const BudgetPage: React.FC = () => {
             return (
               <div
                 key={b.id || b.month}
-                className={`p-5 rounded-2xl glass-card border transition-all space-y-4 ${
-                  isCurrent ? 'border-indigo-500/50 shadow-glow-indigo' : 'border-slate-800 hover:border-slate-700'
-                }`}
+                className={`p-5 rounded-2xl glass-card border transition-all space-y-4 ${isCurrent ? 'border-indigo-500/50 shadow-glow-indigo' : 'border-slate-800 hover:border-slate-700'
+                  }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
