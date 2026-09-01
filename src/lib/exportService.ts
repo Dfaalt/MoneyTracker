@@ -284,7 +284,7 @@ export function exportToPDF({
     doc.setFontSize(8);
     doc.setTextColor(148, 163, 184);
     doc.text(
-      `MoneyTracker © ${new Date().getFullYear()} — Halaman ${i} dari ${totalPages}`,
+      `MoneyTracker by Dfaalt © ${new Date().getFullYear()} — Halaman ${i} dari ${totalPages}`,
       pageWidth / 2,
       doc.internal.pageSize.getHeight() - 8,
       { align: 'center' }
