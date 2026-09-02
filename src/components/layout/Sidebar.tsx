@@ -6,8 +6,10 @@ import {
   BarChart2,
   LogOut,
   Wallet,
+  Download,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { usePWA } from '../../hooks/usePWA';
 
 export type NavPage = 'dashboard' | 'transactions' | 'budget' | 'reports';
 
@@ -18,6 +20,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   const { user, isDemo, logout } = useAuth();
+  const { isInstallable, installApp } = usePWA();
 
   const navItems = [
     { id: 'dashboard' as NavPage, label: 'Dashboard', icon: LayoutDashboard },
@@ -71,6 +74,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
 
       {/* User / Logout Section */}
       <div className="pt-6 border-t border-slate-800/80 space-y-4">
+        {isInstallable && (
+          <button
+            onClick={installApp}
+            className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/10 hover:from-emerald-500/30 hover:to-teal-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition-all shadow-sm group active:scale-95"
+          >
+            <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 text-emerald-400" />
+            <span>Install Aplikasi</span>
+          </button>
+        )}
+
         {isDemo && (
           <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
             <span className="leading-tight">Demo Mode: Data disimpan lokal di browser.</span>
