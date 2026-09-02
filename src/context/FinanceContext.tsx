@@ -104,9 +104,20 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     loadData();
   }, [loadData]);
 
-  // Filter transactions for current selectedMonth
+  // Filter transactions for current selectedMonth, sorted by transaction_date desc then created_at desc
   const monthlyTransactions = useMemo(() => {
-    return transactions.filter((tx) => tx.transaction_date.startsWith(selectedMonth));
+    return transactions
+      .filter((tx) => tx.transaction_date.startsWith(selectedMonth))
+      .sort((a, b) => {
+        const dateA = new Date(a.transaction_date).getTime();
+        const dateB = new Date(b.transaction_date).getTime();
+        if (dateB !== dateA) {
+          return dateB - dateA;
+        }
+        const createdA = new Date(a.created_at || a.transaction_date).getTime();
+        const createdB = new Date(b.created_at || b.transaction_date).getTime();
+        return createdB - createdA;
+      });
   }, [transactions, selectedMonth]);
 
   // Compute Financial Summary

@@ -53,7 +53,12 @@ export const TransactionsPage: React.FC = () => {
     }).sort((a, b) => {
       const dateA = new Date(a.transaction_date).getTime();
       const dateB = new Date(b.transaction_date).getTime();
-      return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+      if (dateA !== dateB) {
+        return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+      }
+      const createdA = new Date(a.created_at || a.transaction_date).getTime();
+      const createdB = new Date(b.created_at || b.transaction_date).getTime();
+      return sortOrder === 'desc' ? createdB - createdA : createdA - createdB;
     });
   }, [monthlyTransactions, searchQuery, typeFilter, categoryFilter, sortOrder]);
 

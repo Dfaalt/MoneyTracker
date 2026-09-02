@@ -8,7 +8,6 @@ const STORAGE_KEYS = {
   ACTIVE_USER: 'money_tracker_user',
 };
 
-// --- Local Storage Helpers ---
 function getLocalTransactions(userId: string): Transaction[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.TRANSACTIONS);
@@ -18,12 +17,22 @@ function getLocalTransactions(userId: string): Transaction[] {
       return INITIAL_DEMO_TRANSACTIONS;
     }
     const all = JSON.parse(raw) as Transaction[];
+    let result: Transaction[];
     if (userId.startsWith('demo-')) {
       const userCustomTx = all.filter((t) => !t.id.startsWith('demo-tx-'));
       // Combine user's custom added transactions with latest demo seed
-      return [...userCustomTx, ...INITIAL_DEMO_TRANSACTIONS];
+      result = [...userCustomTx, ...INITIAL_DEMO_TRANSACTIONS];
+    } else {
+      result = all.filter((t) => t.user_id === userId);
     }
-    return all.filter((t) => t.user_id === userId);
+    return result.sort((a, b) => {
+      const dateA = new Date(a.transaction_date).getTime();
+      const dateB = new Date(b.transaction_date).getTime();
+      if (dateB !== dateA) return dateB - dateA;
+      const createdA = new Date(a.created_at || a.transaction_date).getTime();
+      const createdB = new Date(b.created_at || b.transaction_date).getTime();
+      return createdB - createdA;
+    });
   } catch {
     return INITIAL_DEMO_TRANSACTIONS;
   }
@@ -77,7 +86,8 @@ export const storageService = {
         .from('transactions')
         .select('*')
         .eq('user_id', userId)
-        .order('transaction_date', { ascending: false });
+        .order('transaction_date', { ascending: false })
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error('Supabase getTransactions error:', error);
