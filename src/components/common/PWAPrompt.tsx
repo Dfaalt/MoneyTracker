@@ -68,27 +68,28 @@ export const PWAPrompt: React.FC = () => {
 
       {/* Install Prompt Banner (if installable and not dismissed) */}
       {isInstallable && !dismissInstall && (
-        <div className="fixed bottom-20 lg:bottom-6 left-4 sm:left-6 z-40 max-w-xs w-full bg-[#0D131F]/95 border border-emerald-500/30 rounded-2xl p-3.5 shadow-xl shadow-black/60 backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shrink-0 shadow-glow-emerald">
-                <Download className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-bold text-white truncate">Install MoneyTracker</p>
-                <p className="text-[10px] text-slate-400">Akses cepat & hemat kuota</p>
-              </div>
+        <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw] bg-[#0D131F]/95 border border-emerald-500/40 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 shadow-2xl shadow-black/80 backdrop-blur-xl animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shrink-0 shadow-glow-emerald">
+              <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             </div>
-            <div className="flex items-center gap-1">
+
+            <div className="min-w-0 pr-0.5">
+              <p className="text-xs font-bold text-white whitespace-nowrap">
+                Install App
+              </p>
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={installApp}
-                className="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-transform active:scale-95 shadow-sm"
+                className="px-2.5 py-1 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] sm:text-xs transition-transform active:scale-95 shadow-sm shadow-emerald-500/20"
               >
                 Install
               </button>
               <button
                 onClick={() => setDismissInstall(true)}
-                className="p-1 text-slate-400 hover:text-slate-200"
+                className="p-1 text-slate-400 hover:text-slate-200 transition-colors rounded-full"
                 title="Tutup"
               >
                 <X className="w-3.5 h-3.5" />
