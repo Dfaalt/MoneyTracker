@@ -1,9 +1,9 @@
-import React from 'react';
-import { Transaction } from '../../types';
-import { formatDate, formatRupiah } from '../../lib/utils';
-import { ALL_CATEGORIES } from '../../lib/constants';
-import { CategoryIcon } from '../common/CategoryIcon';
-import { Edit2, Trash2 } from 'lucide-react';
+import React from "react";
+import { Transaction } from "../../types";
+import { formatDate, formatRupiah } from "../../lib/utils";
+import { ALL_CATEGORIES } from "../../lib/constants";
+import { CategoryIcon } from "../common/CategoryIcon";
+import { Edit2, Trash2 } from "lucide-react";
 
 interface TransactionCardListProps {
   transactions: Transaction[];
@@ -19,9 +19,9 @@ export const TransactionCardList: React.FC<TransactionCardListProps> = ({
   return (
     <div className="space-y-2.5">
       {transactions.map((tx) => {
-        const isIncome = tx.type === 'income';
+        const isIncome = tx.type === "income";
         const cat = ALL_CATEGORIES.find(
-          (c) => c.name.toLowerCase() === tx.category.toLowerCase()
+          (c) => c.name.toLowerCase() === tx.category.toLowerCase(),
         );
 
         return (
@@ -33,7 +33,9 @@ export const TransactionCardList: React.FC<TransactionCardListProps> = ({
             <div className="flex items-center gap-3 min-w-0">
               <div
                 className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                  isIncome ? 'bg-emerald-500/10 text-emerald-400' : 'bg-slate-800 text-slate-200'
+                  isIncome
+                    ? "bg-emerald-500/10 text-emerald-400"
+                    : "bg-slate-800 text-slate-200"
                 }`}
               >
                 <CategoryIcon
@@ -51,7 +53,9 @@ export const TransactionCardList: React.FC<TransactionCardListProps> = ({
                 <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5 truncate">
                   <span>{tx.category}</span>
                   <span>·</span>
-                  <span className="font-mono">{formatDate(tx.transaction_date, 'short')}</span>
+                  <span className="font-mono">
+                    {formatDate(tx.transaction_date, "short")}
+                  </span>
                 </p>
               </div>
             </div>
@@ -60,10 +64,10 @@ export const TransactionCardList: React.FC<TransactionCardListProps> = ({
             <div className="flex flex-col items-end gap-1 flex-shrink-0">
               <span
                 className={`text-sm font-mono font-bold ${
-                  isIncome ? 'text-emerald-400' : 'text-slate-100'
+                  isIncome ? "text-emerald-400" : "text-slate-100"
                 }`}
               >
-                {isIncome ? '+' : '-'}
+                {isIncome ? "+" : "-"}
                 {formatRupiah(tx.amount)}
               </span>
 

@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useFinance } from '../../context/FinanceContext';
-import { MonthSelector } from '../dashboard/MonthSelector';
-import { Plus, Wallet, Sparkles, LogOut, User } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState, useRef, useEffect } from "react";
+import { useFinance } from "../../context/FinanceContext";
+import { MonthSelector } from "../dashboard/MonthSelector";
+import { Plus, Wallet, Sparkles, LogOut, User } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export const Header: React.FC = () => {
   const { setIsAddModalOpen } = useFinance();
@@ -13,12 +13,15 @@ export const Header: React.FC = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
         setIsProfileOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -66,7 +69,7 @@ export const Header: React.FC = () => {
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-xs hover:bg-emerald-500/30 transition-all"
             title="Profil & Logout"
           >
-            {user?.name?.[0]?.toUpperCase() || 'U'}
+            {user?.name?.[0]?.toUpperCase() || "U"}
           </button>
 
           {isProfileOpen && (
@@ -77,10 +80,10 @@ export const Header: React.FC = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-white truncate">
-                    {user?.name || 'User'}
+                    {user?.name || "User"}
                   </p>
                   <p className="text-[10px] text-slate-400 truncate">
-                    {user?.email || 'demo@moneytracker.app'}
+                    {user?.email || "demo@moneytracker.app"}
                   </p>
                 </div>
               </div>

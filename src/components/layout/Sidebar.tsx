@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   LayoutDashboard,
   Receipt,
@@ -7,11 +7,11 @@ import {
   LogOut,
   Wallet,
   Download,
-} from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { usePWA } from '../../hooks/usePWA';
+} from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { usePWA } from "../../hooks/usePWA";
 
-export type NavPage = 'dashboard' | 'transactions' | 'budget' | 'reports';
+export type NavPage = "dashboard" | "transactions" | "budget" | "reports";
 
 interface SidebarProps {
   activePage: NavPage;
@@ -23,10 +23,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   const { isInstallable, installApp } = usePWA();
 
   const navItems = [
-    { id: 'dashboard' as NavPage, label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'transactions' as NavPage, label: 'Transactions', icon: Receipt },
-    { id: 'budget' as NavPage, label: 'Budget', icon: Target },
-    { id: 'reports' as NavPage, label: 'Reports', icon: BarChart2 },
+    { id: "dashboard" as NavPage, label: "Dashboard", icon: LayoutDashboard },
+    { id: "transactions" as NavPage, label: "Transactions", icon: Receipt },
+    { id: "budget" as NavPage, label: "Budget", icon: Target },
+    { id: "reports" as NavPage, label: "Reports", icon: BarChart2 },
   ];
 
   return (
@@ -56,12 +56,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${isActive
-                    ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-emerald-400 border border-emerald-500/30 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                  }`}
+                className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                  isActive
+                    ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-emerald-400 border border-emerald-500/30 shadow-sm"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <Icon
+                  className={`w-5 h-5 ${isActive ? "text-emerald-400" : "text-slate-400"}`}
+                />
                 <span>{item.label}</span>
                 {isActive && (
                   <div className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-glow-emerald" />
@@ -86,18 +89,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
 
         {isDemo && (
           <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
-            <span className="leading-tight">Demo Mode: Data disimpan lokal di browser.</span>
+            <span className="leading-tight">
+              Demo Mode: Data disimpan lokal di browser.
+            </span>
           </div>
         )}
 
         <div className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-slate-800">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-full bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-xs">
-              {user?.name?.[0]?.toUpperCase() || 'U'}
+              {user?.name?.[0]?.toUpperCase() || "U"}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-white truncate">{user?.name || 'User'}</p>
-              <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
+              <p className="text-xs font-bold text-white truncate">
+                {user?.name || "User"}
+              </p>
+              <p className="text-[10px] text-slate-400 truncate">
+                {user?.email}
+              </p>
             </div>
           </div>
 

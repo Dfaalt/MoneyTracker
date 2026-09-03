@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -8,10 +8,10 @@ import {
   Tooltip,
   CartesianGrid,
   Cell,
-} from 'recharts';
-import { useFinance } from '../../context/FinanceContext';
-import { formatRupiah } from '../../lib/utils';
-import { BarChart3 } from 'lucide-react';
+} from "recharts";
+import { useFinance } from "../../context/FinanceContext";
+import { formatRupiah } from "../../lib/utils";
+import { BarChart3 } from "lucide-react";
 
 export const DailyExpenseBarChart: React.FC = () => {
   const { dailyExpenseSummaries, selectedMonth } = useFinance();
@@ -27,14 +27,16 @@ export const DailyExpenseBarChart: React.FC = () => {
           <BarChart3 className="w-6 h-6" />
         </div>
         <h4 className="text-base font-bold text-white mb-1">Daily Expense</h4>
-        <p className="text-xs text-slate-400 max-w-xs">Belum ada data pengeluaran harian pada bulan ini.</p>
+        <p className="text-xs text-slate-400 max-w-xs">
+          Belum ada data pengeluaran harian pada bulan ini.
+        </p>
       </div>
     );
   }
 
   // Format Y-axis ticks e.g. Rp20k, Rp40k, Rp60k as in PRD Section 8.15
   const formatYAxis = (tick: number) => {
-    if (tick === 0) return '0';
+    if (tick === 0) return "0";
     if (tick >= 1000000) return `Rp${(tick / 1000000).toFixed(0)}M`;
     if (tick >= 1000) return `Rp${(tick / 1000).toFixed(0)}k`;
     return `Rp${tick}`;
@@ -43,8 +45,12 @@ export const DailyExpenseBarChart: React.FC = () => {
   return (
     <div className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card space-y-4">
       <div>
-        <h4 className="text-base font-bold text-white tracking-tight">Daily Expense</h4>
-        <p className="text-xs text-slate-400">Tren pengeluaran harian sepanjang {selectedMonth}</p>
+        <h4 className="text-base font-bold text-white tracking-tight">
+          Daily Expense
+        </h4>
+        <p className="text-xs text-slate-400">
+          Tren pengeluaran harian sepanjang {selectedMonth}
+        </p>
       </div>
 
       <div className="h-64 w-full">
@@ -53,13 +59,17 @@ export const DailyExpenseBarChart: React.FC = () => {
             data={dailyExpenseSummaries}
             margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#1E293B"
+              vertical={false}
+            />
             <XAxis
               dataKey="dayLabel"
               stroke="#64748B"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#1E293B' }}
+              axisLine={{ stroke: "#1E293B" }}
             />
             <YAxis
               stroke="#64748B"
@@ -70,7 +80,7 @@ export const DailyExpenseBarChart: React.FC = () => {
               width={55}
             />
             <Tooltip
-              cursor={{ fill: 'rgba(51, 65, 85, 0.25)' }}
+              cursor={{ fill: "rgba(51, 65, 85, 0.25)" }}
               content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   const data = payload[0].payload;
@@ -108,9 +118,11 @@ export const DailyExpenseBarChart: React.FC = () => {
                 return (
                   <Cell
                     key={`bar-${index}`}
-                    fill={hasValue ? (isHovered ? '#F43F5E' : '#E11D48') : '#1E293B'}
+                    fill={
+                      hasValue ? (isHovered ? "#F43F5E" : "#E11D48") : "#1E293B"
+                    }
                     opacity={hasValue ? (isHovered ? 1 : 0.85) : 0.2}
-                    cursor={hasValue ? 'pointer' : 'default'}
+                    cursor={hasValue ? "pointer" : "default"}
                   />
                 );
               })}

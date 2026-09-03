@@ -1,12 +1,20 @@
-import React from 'react';
+import React from "react";
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'lord-icon': React.DetailedHTMLProps<
+      "lord-icon": React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           src?: string;
-          trigger?: 'hover' | 'click' | 'loop' | 'loop-on-hover' | 'morph' | 'in' | 'boomerang' | 'sequence';
+          trigger?:
+            | "hover"
+            | "click"
+            | "loop"
+            | "loop-on-hover"
+            | "morph"
+            | "in"
+            | "boomerang"
+            | "sequence";
           target?: string;
           delay?: string | number;
           colors?: string;
@@ -22,10 +30,18 @@ declare global {
   namespace React {
     namespace JSX {
       interface IntrinsicElements {
-        'lord-icon': React.DetailedHTMLProps<
+        "lord-icon": React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             src?: string;
-            trigger?: 'hover' | 'click' | 'loop' | 'loop-on-hover' | 'morph' | 'in' | 'boomerang' | 'sequence';
+            trigger?:
+              | "hover"
+              | "click"
+              | "loop"
+              | "loop-on-hover"
+              | "morph"
+              | "in"
+              | "boomerang"
+              | "sequence";
             target?: string;
             delay?: string | number;
             colors?: string;

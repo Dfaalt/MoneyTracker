@@ -1,12 +1,20 @@
-import React, { useRef, useEffect } from 'react';
-import { ALL_CATEGORIES } from '../../lib/constants';
-import { Tag } from 'lucide-react';
+import React, { useRef, useEffect } from "react";
+import { ALL_CATEGORIES } from "../../lib/constants";
+import { Tag } from "lucide-react";
 
 interface CategoryIconProps {
   category?: string;
   icon?: string;
   size?: number | string;
-  trigger?: 'hover' | 'click' | 'loop' | 'loop-on-hover' | 'morph' | 'in' | 'boomerang' | 'sequence';
+  trigger?:
+    | "hover"
+    | "click"
+    | "loop"
+    | "loop-on-hover"
+    | "morph"
+    | "in"
+    | "boomerang"
+    | "sequence";
   target?: string;
   colors?: string;
   className?: string;
@@ -16,36 +24,41 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
   category,
   icon,
   size = 22,
-  trigger = 'hover',
+  trigger = "hover",
   target,
   colors,
-  className = '',
+  className = "",
 }) => {
   const containerRef = useRef<HTMLSpanElement>(null);
   const iconRef = useRef<any>(null);
 
   // Lookup category if not fully specified
   const matchedCategory = category
-    ? ALL_CATEGORIES.find((c) => c.name.toLowerCase() === category.toLowerCase())
+    ? ALL_CATEGORIES.find(
+        (c) => c.name.toLowerCase() === category.toLowerCase(),
+      )
     : undefined;
 
-  const targetIcon = icon || matchedCategory?.icon || 'https://cdn.lordicon.com/nocovwne.json';
+  const targetIcon =
+    icon || matchedCategory?.icon || "https://cdn.lordicon.com/nocovwne.json";
 
   const isLordIcon =
-    typeof targetIcon === 'string' &&
-    (targetIcon.startsWith('http') ||
-      targetIcon.startsWith('/') ||
-      targetIcon.startsWith('./') ||
-      targetIcon.endsWith('.json') ||
+    typeof targetIcon === "string" &&
+    (targetIcon.startsWith("http") ||
+      targetIcon.startsWith("/") ||
+      targetIcon.startsWith("./") ||
+      targetIcon.endsWith(".json") ||
       /^[a-z0-9]{8}$/.test(targetIcon));
 
   const lordIconSrc = isLordIcon
-    ? targetIcon.startsWith('http') || targetIcon.startsWith('/') || targetIcon.startsWith('./')
+    ? targetIcon.startsWith("http") ||
+      targetIcon.startsWith("/") ||
+      targetIcon.startsWith("./")
       ? targetIcon
-      : `https://cdn.lordicon.com/${targetIcon.replace(/\.json$/, '')}.json`
+      : `https://cdn.lordicon.com/${targetIcon.replace(/\.json$/, "")}.json`
     : null;
 
-  const dimension = typeof size === 'number' ? `${size}px` : size;
+  const dimension = typeof size === "number" ? `${size}px` : size;
 
   // Trigger animation when parent container (e.g. table row, card, button, legend item) is hovered or clicked
   useEffect(() => {
@@ -54,7 +67,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
 
     // Find the closest interactive/item container
     const parentContainer = span.closest<HTMLElement>(
-      'button, tr, a, .group, [role="button"], .cursor-pointer, .glass-card, div'
+      'button, tr, a, .group, [role="button"], .cursor-pointer, .glass-card, div',
     );
 
     if (parentContainer) {
@@ -63,25 +76,27 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         if (!iconEl) return;
 
         // Try standard Lordicon player APIs or dispatch event
-        if (typeof iconEl.playAnimation === 'function') {
+        if (typeof iconEl.playAnimation === "function") {
           iconEl.playAnimation();
-        } else if (iconEl.player && typeof iconEl.player.play === 'function') {
+        } else if (iconEl.player && typeof iconEl.player.play === "function") {
           iconEl.player.play();
         } else {
           try {
-            iconEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+            iconEl.dispatchEvent(
+              new MouseEvent("mouseenter", { bubbles: true }),
+            );
           } catch (e) {
             // Ignore if dispatch fails
           }
         }
       };
 
-      parentContainer.addEventListener('mouseenter', triggerIconAnimation);
-      parentContainer.addEventListener('click', triggerIconAnimation);
+      parentContainer.addEventListener("mouseenter", triggerIconAnimation);
+      parentContainer.addEventListener("click", triggerIconAnimation);
 
       return () => {
-        parentContainer.removeEventListener('mouseenter', triggerIconAnimation);
-        parentContainer.removeEventListener('click', triggerIconAnimation);
+        parentContainer.removeEventListener("mouseenter", triggerIconAnimation);
+        parentContainer.removeEventListener("click", triggerIconAnimation);
       };
     }
   }, [lordIconSrc]);
@@ -97,9 +112,12 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
           ref={iconRef}
           src={lordIconSrc}
           trigger={trigger}
-          target={target || 'button, tr, a, .group, [role="button"], .cursor-pointer, div'}
+          target={
+            target ||
+            'button, tr, a, .group, [role="button"], .cursor-pointer, div'
+          }
           colors={colors}
-          style={{ width: dimension, height: dimension, display: 'block' }}
+          style={{ width: dimension, height: dimension, display: "block" }}
         />
       </span>
     );

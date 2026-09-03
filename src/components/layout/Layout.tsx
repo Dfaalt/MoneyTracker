@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { Sidebar, NavPage } from './Sidebar';
-import { BottomNav } from './BottomNav';
-import { Header } from './Header';
-import { ToastContainer } from '../common/Toast';
-import { TransactionModal } from '../transactions/TransactionModal';
-import { BudgetModal } from '../budget/BudgetModal';
-import { useFinance } from '../../context/FinanceContext';
-import { DashboardPage } from '../../pages/DashboardPage';
-import { TransactionsPage } from '../../pages/TransactionsPage';
-import { BudgetPage } from '../../pages/BudgetPage';
-import { ReportsPage } from '../../pages/ReportsPage';
+import React, { useState } from "react";
+import { Sidebar, NavPage } from "./Sidebar";
+import { BottomNav } from "./BottomNav";
+import { Header } from "./Header";
+import { ToastContainer } from "../common/Toast";
+import { TransactionModal } from "../transactions/TransactionModal";
+import { BudgetModal } from "../budget/BudgetModal";
+import { useFinance } from "../../context/FinanceContext";
+import { DashboardPage } from "../../pages/DashboardPage";
+import { TransactionsPage } from "../../pages/TransactionsPage";
+import { BudgetPage } from "../../pages/BudgetPage";
+import { ReportsPage } from "../../pages/ReportsPage";
 
 export const Layout: React.FC = () => {
-  const [activePage, setActivePage] = useState<NavPage>('dashboard');
+  const [activePage, setActivePage] = useState<NavPage>("dashboard");
   const {
     isAddModalOpen,
     setIsAddModalOpen,
@@ -22,13 +22,13 @@ export const Layout: React.FC = () => {
 
   const renderContent = () => {
     switch (activePage) {
-      case 'dashboard':
+      case "dashboard":
         return <DashboardPage onNavigate={setActivePage} />;
-      case 'transactions':
+      case "transactions":
         return <TransactionsPage />;
-      case 'budget':
+      case "budget":
         return <BudgetPage />;
-      case 'reports':
+      case "reports":
         return <ReportsPage />;
       default:
         return <DashboardPage onNavigate={setActivePage} />;

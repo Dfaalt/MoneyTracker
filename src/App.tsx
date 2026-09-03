@@ -1,9 +1,9 @@
-import React from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { FinanceProvider } from './context/FinanceContext';
-import { Layout } from './components/layout/Layout';
-import { AuthPage } from './pages/AuthPage';
-import { PWAPrompt } from './components/common/PWAPrompt';
+import React from "react";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { FinanceProvider } from "./context/FinanceContext";
+import { Layout } from "./components/layout/Layout";
+import { AuthPage } from "./pages/AuthPage";
+import { PWAPrompt } from "./components/common/PWAPrompt";
 
 const AppContent: React.FC = () => {
   const { user } = useAuth();

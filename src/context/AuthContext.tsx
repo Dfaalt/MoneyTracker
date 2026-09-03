@@ -1,13 +1,17 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { UserProfile } from '../types';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { UserProfile } from "../types";
+import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 interface AuthContextType {
   user: UserProfile | null;
   isLoading: boolean;
   isDemo: boolean;
   login: (email: string, password?: string) => Promise<{ error?: string }>;
-  register: (email: string, password?: string, name?: string) => Promise<{ error?: string }>;
+  register: (
+    email: string,
+    password?: string,
+    name?: string,
+  ) => Promise<{ error?: string }>;
   resendConfirmation: (email: string) => Promise<{ error?: string }>;
   loginAsDemo: () => void;
   logout: () => Promise<void>;
@@ -16,15 +20,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const DEMO_USER: UserProfile = {
-  id: 'demo-user-123',
-  email: 'dfaalt@moneytracker.app',
-  name: 'Dfaalt',
-  avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  id: "demo-user-123",
+  email: "dfaalt@moneytracker.app",
+  name: "Dfaalt",
+  avatar_url:
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
 };
 
-const AUTH_STORAGE_KEY = 'money_tracker_auth_user';
+const AUTH_STORAGE_KEY = "money_tracker_auth_user";
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<UserProfile | null>(() => {
     // Check saved session
     const saved = localStorage.getItem(AUTH_STORAGE_KEY);
@@ -40,24 +47,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isDemo = user?.id.startsWith('demo-') || false;
+  const isDemo = user?.id.startsWith("demo-") || false;
 
   useEffect(() => {
     const initAuth = async () => {
       if (isSupabaseConfigured && supabase) {
         try {
-          const { data: { session } } = await supabase.auth.getSession();
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
           if (session?.user) {
             const authUser: UserProfile = {
               id: session.user.id,
-              email: session.user.email || '',
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+              email: session.user.email || "",
+              name:
+                session.user.user_metadata?.name ||
+                session.user.email?.split("@")[0],
             };
             setUser(authUser);
             localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authUser));
           }
         } catch (err) {
-          console.error('Supabase session load error:', err);
+          console.error("Supabase session load error:", err);
         }
       }
       setIsLoading(false);
@@ -66,12 +77,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initAuth();
 
     if (isSupabaseConfigured && supabase) {
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
         if (session?.user) {
           const authUser: UserProfile = {
             id: session.user.id,
-            email: session.user.email || '',
-            name: session.user.user_metadata?.name || session.user.email?.split('@')[0],
+            email: session.user.email || "",
+            name:
+              session.user.user_metadata?.name ||
+              session.user.email?.split("@")[0],
           };
           setUser(authUser);
           localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authUser));
@@ -98,7 +113,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const authUser: UserProfile = {
           id: data.user.id,
           email: data.user.email || email,
-          name: data.user.user_metadata?.name || email.split('@')[0],
+          name: data.user.user_metadata?.name || email.split("@")[0],
         };
         setUser(authUser);
         localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authUser));
@@ -108,9 +123,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Local / Demo mode sign-in
     const localUser: UserProfile = {
-      id: 'usr-' + btoa(email).slice(0, 10),
+      id: "usr-" + btoa(email).slice(0, 10),
       email,
-      name: email.split('@')[0],
+      name: email.split("@")[0],
     };
     setUser(localUser);
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(localUser));
@@ -138,7 +153,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const resendConfirmation = async (email: string) => {
     if (isSupabaseConfigured && supabase) {
       const { error } = await supabase.auth.resend({
-        type: 'signup',
+        type: "signup",
         email,
       });
       if (error) return { error: error.message };
@@ -180,6 +195,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };

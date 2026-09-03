@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useFinance } from '../../context/FinanceContext';
-import { Transaction } from '../../types';
-import { TransactionTable } from '../transactions/TransactionTable';
-import { TransactionCardList } from '../transactions/TransactionCardList';
-import { TransactionModal } from '../transactions/TransactionModal';
-import { ConfirmDialog } from '../common/ConfirmDialog';
-import { EmptyState } from '../common/EmptyState';
-import { ArrowRight, FilterX } from 'lucide-react';
+import React, { useState } from "react";
+import { useFinance } from "../../context/FinanceContext";
+import { Transaction } from "../../types";
+import { TransactionTable } from "../transactions/TransactionTable";
+import { TransactionCardList } from "../transactions/TransactionCardList";
+import { TransactionModal } from "../transactions/TransactionModal";
+import { ConfirmDialog } from "../common/ConfirmDialog";
+import { EmptyState } from "../common/EmptyState";
+import { ArrowRight, FilterX } from "lucide-react";
 
 interface RecentTransactionsProps {
   onNavigateToTransactions?: () => void;
@@ -30,7 +30,8 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
   // Filter if user clicked category on Donut chart (PRD Section 8.14)
   const filteredList = dashboardCategoryFilter
     ? monthlyTransactions.filter(
-        (t) => t.category.toLowerCase() === dashboardCategoryFilter.toLowerCase()
+        (t) =>
+          t.category.toLowerCase() === dashboardCategoryFilter.toLowerCase(),
       )
     : monthlyTransactions;
 
@@ -53,7 +54,9 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h4 className="text-base font-bold text-white tracking-tight">Recent Transactions</h4>
+            <h4 className="text-base font-bold text-white tracking-tight">
+              Recent Transactions
+            </h4>
             {dashboardCategoryFilter && (
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
                 Category: {dashboardCategoryFilter}
@@ -63,7 +66,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
           <p className="text-xs text-slate-400">
             {dashboardCategoryFilter
               ? `Menampilkan transaksi kategori ${dashboardCategoryFilter}`
-              : 'Daftar transaksi terbaru di bulan ini'}
+              : "Daftar transaksi terbaru di bulan ini"}
           </p>
         </div>
 
@@ -97,7 +100,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({
           title={
             dashboardCategoryFilter
               ? `Belum ada transaksi untuk kategori ${dashboardCategoryFilter}`
-              : 'No transactions yet.'
+              : "No transactions yet."
           }
           description="Start tracking your money today and see real-time updates."
           actionLabel="Add Transaction"

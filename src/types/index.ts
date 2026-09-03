@@ -1,4 +1,4 @@
-export type TransactionType = 'expense' | 'income';
+export type TransactionType = "expense" | "income";
 
 export interface Transaction {
   id: string;
@@ -30,7 +30,7 @@ export interface Category {
   bgColor: string;
 }
 
-export type BudgetStatusLevel = 'safe' | 'warning' | 'critical' | 'exceeded';
+export type BudgetStatusLevel = "safe" | "warning" | "critical" | "exceeded";
 
 export interface BudgetProgress {
   spent: number;
@@ -78,7 +78,7 @@ export interface ToastNotification {
   id: string;
   title: string;
   message?: string;
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: "success" | "error" | "warning" | "info";
   details?: {
     description?: string;
     amount?: number;

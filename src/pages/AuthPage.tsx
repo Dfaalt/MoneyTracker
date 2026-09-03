@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import {
   Wallet,
   Lock,
@@ -12,38 +12,39 @@ import {
   ExternalLink,
   RefreshCw,
   ArrowLeft,
-  Inbox
-} from 'lucide-react';
+  Inbox,
+} from "lucide-react";
 
 export const AuthPage: React.FC = () => {
   const { login, register, resendConfirmation, loginAsDemo } = useAuth();
   const [isRegister, setIsRegister] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [name, setName] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [name, setName] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Email confirmation state
-  const [isRegisteredSuccess, setIsRegisteredSuccess] = useState<boolean>(false);
-  const [registeredEmail, setRegisteredEmail] = useState<string>('');
+  const [isRegisteredSuccess, setIsRegisteredSuccess] =
+    useState<boolean>(false);
+  const [registeredEmail, setRegisteredEmail] = useState<string>("");
   const [isResending, setIsResending] = useState<boolean>(false);
-  const [resendStatus, setResendStatus] = useState<string>('');
+  const [resendStatus, setResendStatus] = useState<string>("");
   const [resendCooldown, setResendCooldown] = useState<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setError('Email wajib diisi.');
+      setError("Email wajib diisi.");
       return;
     }
     if (!password || password.length < 6) {
-      setError('Password minimal 6 karakter.');
+      setError("Password minimal 6 karakter.");
       return;
     }
 
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
@@ -54,33 +55,40 @@ export const AuthPage: React.FC = () => {
         } else {
           setRegisteredEmail(email);
           setIsRegisteredSuccess(true);
-          setResendStatus('');
+          setResendStatus("");
         }
       } else {
         const res = await login(email, password);
         if (res?.error) setError(res.error);
       }
     } catch (err: any) {
-      setError(err.message || 'Terjadi kesalahan autentikasi.');
+      setError(err.message || "Terjadi kesalahan autentikasi.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleOpenGmail = () => {
-    window.open('https://mail.google.com/', '_blank', 'noopener,noreferrer');
+    window.open("https://mail.google.com/", "_blank", "noopener,noreferrer");
   };
 
   const getEmailProviderLink = (emailAddr: string) => {
-    const domain = emailAddr.split('@')[1]?.toLowerCase() || '';
-    if (domain.includes('yahoo')) {
-      return { name: 'Yahoo Mail', url: 'https://mail.yahoo.com/' };
+    const domain = emailAddr.split("@")[1]?.toLowerCase() || "";
+    if (domain.includes("yahoo")) {
+      return { name: "Yahoo Mail", url: "https://mail.yahoo.com/" };
     }
-    if (domain.includes('outlook') || domain.includes('hotmail') || domain.includes('live')) {
-      return { name: 'Outlook / Hotmail', url: 'https://outlook.live.com/mail/' };
+    if (
+      domain.includes("outlook") ||
+      domain.includes("hotmail") ||
+      domain.includes("live")
+    ) {
+      return {
+        name: "Outlook / Hotmail",
+        url: "https://outlook.live.com/mail/",
+      };
     }
-    if (domain.includes('icloud')) {
-      return { name: 'iCloud Mail', url: 'https://www.icloud.com/mail' };
+    if (domain.includes("icloud")) {
+      return { name: "iCloud Mail", url: "https://www.icloud.com/mail" };
     }
     return null;
   };
@@ -88,13 +96,13 @@ export const AuthPage: React.FC = () => {
   const handleResend = async () => {
     if (resendCooldown > 0 || isResending) return;
     setIsResending(true);
-    setResendStatus('');
+    setResendStatus("");
     try {
       const res = await resendConfirmation(registeredEmail);
       if (res?.error) {
         setResendStatus(`Gagal: ${res.error}`);
       } else {
-        setResendStatus('Email verifikasi baru berhasil dikirim!');
+        setResendStatus("Email verifikasi baru berhasil dikirim!");
         setResendCooldown(30);
         const timer = setInterval(() => {
           setResendCooldown((prev) => {
@@ -107,7 +115,7 @@ export const AuthPage: React.FC = () => {
         }, 1000);
       }
     } catch (err: any) {
-      setResendStatus(err.message || 'Gagal mengirim ulang email.');
+      setResendStatus(err.message || "Gagal mengirim ulang email.");
     } finally {
       setIsResending(false);
     }
@@ -160,7 +168,8 @@ export const AuthPage: React.FC = () => {
                   {registeredEmail}
                 </div>
                 <p className="text-xs text-slate-400 pt-1">
-                  Silakan buka email Anda dan klik tombol atau tautan konfirmasi untuk mengaktifkan akun.
+                  Silakan buka email Anda dan klik tombol atau tautan konfirmasi
+                  untuk mengaktifkan akun.
                 </p>
               </div>
 
@@ -173,9 +182,19 @@ export const AuthPage: React.FC = () => {
                   className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-emerald-600 hover:from-red-500 hover:to-emerald-500 text-white font-bold text-sm shadow-lg shadow-red-950/40 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 group"
                 >
                   {/* Gmail Colored Icon */}
-                  <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                    <path fill="#EA4335" d="M12 13.5L2 6.5V18a2 2 0 002 2h16a2 2 0 002-2V6.5L12 13.5z" />
-                    <path fill="#4285F4" d="M22 6.5L12 13.5 2 6.5V6a2 2 0 012-2h16a2 2 0 012 2v.5z" />
+                  <svg
+                    className="w-5 h-5 flex-shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill="#EA4335"
+                      d="M12 13.5L2 6.5V18a2 2 0 002 2h16a2 2 0 002-2V6.5L12 13.5z"
+                    />
+                    <path
+                      fill="#4285F4"
+                      d="M22 6.5L12 13.5 2 6.5V6a2 2 0 012-2h16a2 2 0 012 2v.5z"
+                    />
                   </svg>
                   <span>Buka Gmail Langsung</span>
                   <ExternalLink className="w-4 h-4 ml-auto opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -197,10 +216,13 @@ export const AuthPage: React.FC = () => {
 
                 {/* Resend Status / Feedback */}
                 {resendStatus && (
-                  <p className={`text-xs p-2.5 rounded-xl border ${resendStatus.startsWith('Gagal')
-                    ? 'bg-rose-500/10 border-rose-500/20 text-rose-300'
-                    : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium'
-                    }`}>
+                  <p
+                    className={`text-xs p-2.5 rounded-xl border ${
+                      resendStatus.startsWith("Gagal")
+                        ? "bg-rose-500/10 border-rose-500/20 text-rose-300"
+                        : "bg-emerald-500/10 border-emerald-500/20 text-emerald-300 font-medium"
+                    }`}
+                  >
                     {resendStatus}
                   </p>
                 )}
@@ -212,13 +234,15 @@ export const AuthPage: React.FC = () => {
                   disabled={isResending || resendCooldown > 0}
                   className="w-full py-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white font-medium text-xs border border-slate-800 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 text-slate-400 ${isResending ? 'animate-spin' : ''}`} />
+                  <RefreshCw
+                    className={`w-3.5 h-3.5 text-slate-400 ${isResending ? "animate-spin" : ""}`}
+                  />
                   <span>
                     {isResending
-                      ? 'Mengirim ulang...'
+                      ? "Mengirim ulang..."
                       : resendCooldown > 0
                         ? `Kirim Ulang (${resendCooldown}s)`
-                        : 'Belum terima email? Kirim Ulang'}
+                        : "Belum terima email? Kirim Ulang"}
                   </span>
                 </button>
               </div>
@@ -230,7 +254,7 @@ export const AuthPage: React.FC = () => {
                   onClick={() => {
                     setIsRegisteredSuccess(false);
                     setIsRegister(false);
-                    setError('');
+                    setError("");
                   }}
                   className="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-emerald-400 font-semibold text-xs border border-emerald-500/30 flex items-center justify-center gap-2 transition-all"
                 >
@@ -241,7 +265,7 @@ export const AuthPage: React.FC = () => {
                   type="button"
                   onClick={() => {
                     setIsRegisteredSuccess(false);
-                    setError('');
+                    setError("");
                   }}
                   className="text-xs text-slate-400 hover:text-slate-200 transition-colors inline-flex items-center gap-1"
                 >
@@ -256,12 +280,12 @@ export const AuthPage: React.FC = () => {
               {/* Form Title & Subtitle */}
               <div className="space-y-1">
                 <h2 className="text-xl font-bold text-white tracking-tight">
-                  {isRegister ? 'Create an Account' : 'Sign In to Your Account'}
+                  {isRegister ? "Create an Account" : "Sign In to Your Account"}
                 </h2>
                 <p className="text-xs text-slate-400">
                   {isRegister
-                    ? 'Daftar untuk mulai mengelola keuangan pribadi Anda'
-                    : 'Masuk dengan email & password yang sudah terdaftar'}
+                    ? "Daftar untuk mulai mengelola keuangan pribadi Anda"
+                    : "Masuk dengan email & password yang sudah terdaftar"}
                 </p>
               </div>
 
@@ -305,7 +329,7 @@ export const AuthPage: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -316,7 +340,9 @@ export const AuthPage: React.FC = () => {
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
                       className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 transition-colors focus:outline-none"
-                      title={showPassword ? 'Sembunyikan password' : 'Lihat password'}
+                      title={
+                        showPassword ? "Sembunyikan password" : "Lihat password"
+                      }
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4 text-slate-300" />
@@ -338,7 +364,13 @@ export const AuthPage: React.FC = () => {
                   disabled={isLoading}
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-950/50 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  <span>{isLoading ? 'Processing...' : isRegister ? 'Create Account' : 'Sign In'}</span>
+                  <span>
+                    {isLoading
+                      ? "Processing..."
+                      : isRegister
+                        ? "Create Account"
+                        : "Sign In"}
+                  </span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
@@ -346,12 +378,12 @@ export const AuthPage: React.FC = () => {
                 <div className="text-center pt-1.5">
                   {isRegister ? (
                     <p className="text-xs text-slate-400">
-                      Already have an account?{' '}
+                      Already have an account?{" "}
                       <button
                         type="button"
                         onClick={() => {
                           setIsRegister(false);
-                          setError('');
+                          setError("");
                         }}
                         className="text-emerald-400 font-semibold hover:text-emerald-300 hover:underline transition-colors ml-1"
                       >
@@ -360,12 +392,12 @@ export const AuthPage: React.FC = () => {
                     </p>
                   ) : (
                     <p className="text-xs text-slate-400">
-                      Don't have an account?{' '}
+                      Don't have an account?{" "}
                       <button
                         type="button"
                         onClick={() => {
                           setIsRegister(true);
-                          setError('');
+                          setError("");
                         }}
                         className="text-emerald-400 font-semibold hover:text-emerald-300 hover:underline transition-colors ml-1"
                       >
@@ -378,7 +410,9 @@ export const AuthPage: React.FC = () => {
 
               {/* Quick Demo Login Option */}
               <div className="pt-2 border-t border-slate-800 space-y-3 text-center">
-                <p className="text-xs text-slate-400">Ingin langsung mencoba fitur aplikasi?</p>
+                <p className="text-xs text-slate-400">
+                  Ingin langsung mencoba fitur aplikasi?
+                </p>
                 <button
                   type="button"
                   onClick={loginAsDemo}

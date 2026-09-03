@@ -1,12 +1,12 @@
-import React from 'react';
-import { useFinance } from '../context/FinanceContext';
-import { SummaryCards } from '../components/dashboard/SummaryCards';
-import { BudgetProgressBar } from '../components/dashboard/BudgetProgressBar';
-import { CategoryDonutChart } from '../components/dashboard/CategoryDonutChart';
-import { DailyExpenseBarChart } from '../components/dashboard/DailyExpenseBarChart';
-import { RecentTransactions } from '../components/dashboard/RecentTransactions';
-import { DashboardSkeleton } from '../components/common/Skeleton';
-import { NavPage } from '../components/layout/Sidebar';
+import React from "react";
+import { useFinance } from "../context/FinanceContext";
+import { SummaryCards } from "../components/dashboard/SummaryCards";
+import { BudgetProgressBar } from "../components/dashboard/BudgetProgressBar";
+import { CategoryDonutChart } from "../components/dashboard/CategoryDonutChart";
+import { DailyExpenseBarChart } from "../components/dashboard/DailyExpenseBarChart";
+import { RecentTransactions } from "../components/dashboard/RecentTransactions";
+import { DashboardSkeleton } from "../components/common/Skeleton";
+import { NavPage } from "../components/layout/Sidebar";
 
 interface DashboardPageProps {
   onNavigate: (page: NavPage) => void;
@@ -43,7 +43,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
 
       {/* 4. Recent Transactions Section */}
       <section>
-        <RecentTransactions onNavigateToTransactions={() => onNavigate('transactions')} />
+        <RecentTransactions
+          onNavigateToTransactions={() => onNavigate("transactions")}
+        />
       </section>
     </div>
   );

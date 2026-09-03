@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Modal } from '../common/Modal';
-import { useFinance } from '../../context/FinanceContext';
-import { formatRupiah, parseCurrencyInput, formatMonthYear } from '../../lib/utils';
-import { Target, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Modal } from "../common/Modal";
+import { useFinance } from "../../context/FinanceContext";
+import {
+  formatRupiah,
+  parseCurrencyInput,
+  formatMonthYear,
+} from "../../lib/utils";
+import { Target, Calendar } from "lucide-react";
 
 interface BudgetModalProps {
   isOpen: boolean;
@@ -19,8 +23,8 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
   const currentMonth = targetMonth || selectedMonth;
 
   const [month, setMonth] = useState<string>(currentMonth);
-  const [amountRaw, setAmountRaw] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [amountRaw, setAmountRaw] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,15 +34,15 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
     if (existing && existing.amount > 0) {
       setAmountRaw(existing.amount.toString());
     } else {
-      setAmountRaw('3000000'); // Default suggestion 3 Million
+      setAmountRaw("3000000"); // Default suggestion 3 Million
     }
-    setError('');
+    setError("");
   }, [targetMonth, selectedMonth, budgets, isOpen]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const numeric = parseCurrencyInput(e.target.value);
-    setAmountRaw(numeric > 0 ? numeric.toString() : '');
-    if (error) setError('');
+    setAmountRaw(numeric > 0 ? numeric.toString() : "");
+    if (error) setError("");
   };
 
   const handleQuickPreset = (presetAmount: number) => {
@@ -50,7 +54,7 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
     const numericAmount = parseInt(amountRaw, 10);
 
     if (isNaN(numericAmount) || numericAmount < 0) {
-      setError('Masukkan jumlah budget yang valid (minimal Rp0).');
+      setError("Masukkan jumlah budget yang valid (minimal Rp0).");
       return;
     }
 
@@ -59,13 +63,13 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
       await setMonthlyBudget(month, numericAmount);
       onClose();
     } catch (err) {
-      console.error('Budget error:', err);
+      console.error("Budget error:", err);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const displayAmountNumber = parseInt(amountRaw || '0', 10);
+  const displayAmountNumber = parseInt(amountRaw || "0", 10);
 
   return (
     <Modal
@@ -104,7 +108,11 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
               type="text"
               inputMode="numeric"
               placeholder="0"
-              value={displayAmountNumber > 0 ? displayAmountNumber.toLocaleString('id-ID') : ''}
+              value={
+                displayAmountNumber > 0
+                  ? displayAmountNumber.toLocaleString("id-ID")
+                  : ""
+              }
               onChange={handleAmountChange}
               className="w-full pl-11 pr-4 py-3 bg-slate-900/90 border border-slate-700/70 rounded-xl text-lg font-mono font-bold text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
               autoFocus
@@ -130,8 +138,8 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
                 onClick={() => handleQuickPreset(preset)}
                 className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
                   displayAmountNumber === preset
-                    ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
-                    : 'bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800'
+                    ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/40"
+                    : "bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800"
                 }`}
               >
                 {formatRupiah(preset, { compact: true })}
@@ -159,7 +167,7 @@ export const BudgetModal: React.FC<BudgetModalProps> = ({
             disabled={isSubmitting}
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm shadow-lg shadow-indigo-950/50 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            {isSubmitting ? 'Saving...' : 'Save Budget'}
+            {isSubmitting ? "Saving..." : "Save Budget"}
           </button>
         </div>
       </form>

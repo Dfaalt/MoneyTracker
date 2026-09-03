@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
-import { useFinance } from '../../context/FinanceContext';
-import { formatRupiah } from '../../lib/utils';
-import { CategoryIcon } from '../common/CategoryIcon';
-import { PieChart as PieIcon, FilterX } from 'lucide-react';
+import React, { useState } from "react";
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useFinance } from "../../context/FinanceContext";
+import { formatRupiah } from "../../lib/utils";
+import { CategoryIcon } from "../common/CategoryIcon";
+import { PieChart as PieIcon, FilterX } from "lucide-react";
 
 export const CategoryDonutChart: React.FC = () => {
-  const { categorySummaries, summary, dashboardCategoryFilter, setDashboardCategoryFilter } = useFinance();
+  const {
+    categorySummaries,
+    summary,
+    dashboardCategoryFilter,
+    setDashboardCategoryFilter,
+  } = useFinance();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   if (categorySummaries.length === 0) {
@@ -15,8 +20,12 @@ export const CategoryDonutChart: React.FC = () => {
         <div className="p-3 rounded-2xl bg-slate-800/80 text-slate-400 mb-3">
           <PieIcon className="w-6 h-6" />
         </div>
-        <h4 className="text-base font-bold text-white mb-1">Expense by Category</h4>
-        <p className="text-xs text-slate-400 max-w-xs">Belum ada pengeluaran pada bulan ini untuk divisualisasikan.</p>
+        <h4 className="text-base font-bold text-white mb-1">
+          Expense by Category
+        </h4>
+        <p className="text-xs text-slate-400 max-w-xs">
+          Belum ada pengeluaran pada bulan ini untuk divisualisasikan.
+        </p>
       </div>
     );
   }
@@ -33,8 +42,12 @@ export const CategoryDonutChart: React.FC = () => {
     <div className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h4 className="text-base font-bold text-white tracking-tight">Expense by Category</h4>
-          <p className="text-xs text-slate-400">Distribusi pengeluaran berdasarkan kategori</p>
+          <h4 className="text-base font-bold text-white tracking-tight">
+            Expense by Category
+          </h4>
+          <p className="text-xs text-slate-400">
+            Distribusi pengeluaran berdasarkan kategori
+          </p>
         </div>
 
         {dashboardCategoryFilter && (
@@ -60,7 +73,12 @@ export const CategoryDonutChart: React.FC = () => {
                     return (
                       <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 shadow-xl text-xs space-y-1">
                         <div className="flex items-center gap-1.5 font-bold text-white">
-                          <CategoryIcon category={data.category} icon={data.icon} size={22} trigger="hover" />
+                          <CategoryIcon
+                            category={data.category}
+                            icon={data.icon}
+                            size={22}
+                            trigger="hover"
+                          />
                           <span>{data.category}</span>
                         </div>
                         <div className="text-emerald-400 font-mono font-semibold">
@@ -102,8 +120,8 @@ export const CategoryDonutChart: React.FC = () => {
                         dashboardCategoryFilter && !isSelected
                           ? 0.35
                           : isHovered
-                          ? 1
-                          : 0.9
+                            ? 1
+                            : 0.9
                       }
                     />
                   );
@@ -114,7 +132,9 @@ export const CategoryDonutChart: React.FC = () => {
 
           {/* Center Info in Donut */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-[11px] text-slate-400 uppercase font-semibold">Total</span>
+            <span className="text-[11px] text-slate-400 uppercase font-semibold">
+              Total
+            </span>
             <span className="text-sm font-bold font-mono text-white">
               {formatRupiah(summary.expense, { compact: true })}
             </span>
@@ -128,11 +148,13 @@ export const CategoryDonutChart: React.FC = () => {
             return (
               <div
                 key={cat.category}
-                onClick={() => setDashboardCategoryFilter(isSelected ? null : cat.category)}
+                onClick={() =>
+                  setDashboardCategoryFilter(isSelected ? null : cat.category)
+                }
                 className={`flex items-center justify-between p-2 rounded-xl cursor-pointer transition-all ${
                   isSelected
-                    ? 'bg-slate-800 border border-slate-700 shadow-sm'
-                    : 'hover:bg-slate-800/50 border border-transparent'
+                    ? "bg-slate-800 border border-slate-700 shadow-sm"
+                    : "hover:bg-slate-800/50 border border-transparent"
                 }`}
               >
                 <div className="flex items-center gap-2 min-w-0">
@@ -140,8 +162,15 @@ export const CategoryDonutChart: React.FC = () => {
                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                     style={{ backgroundColor: cat.color }}
                   />
-                  <CategoryIcon category={cat.category} icon={cat.icon} size={26} trigger="hover" />
-                  <span className="text-xs font-semibold text-slate-200 truncate">{cat.category}</span>
+                  <CategoryIcon
+                    category={cat.category}
+                    icon={cat.icon}
+                    size={26}
+                    trigger="hover"
+                  />
+                  <span className="text-xs font-semibold text-slate-200 truncate">
+                    {cat.category}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2 text-right">

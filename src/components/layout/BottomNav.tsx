@@ -1,14 +1,23 @@
-import React from 'react';
-import { LayoutDashboard, Receipt, Target, BarChart2, Plus } from 'lucide-react';
-import { NavPage } from './Sidebar';
-import { useFinance } from '../../context/FinanceContext';
+import React from "react";
+import {
+  LayoutDashboard,
+  Receipt,
+  Target,
+  BarChart2,
+  Plus,
+} from "lucide-react";
+import { NavPage } from "./Sidebar";
+import { useFinance } from "../../context/FinanceContext";
 
 interface BottomNavProps {
   activePage: NavPage;
   onNavigate: (page: NavPage) => void;
 }
 
-export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) => {
+export const BottomNav: React.FC<BottomNavProps> = ({
+  activePage,
+  onNavigate,
+}) => {
   const { setIsAddModalOpen } = useFinance();
 
   return (
@@ -16,28 +25,32 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
       <div className="grid grid-cols-5 items-center w-full max-w-md mx-auto relative">
         {/* 1. Home / Dashboard */}
         <button
-          onClick={() => onNavigate('dashboard')}
+          onClick={() => onNavigate("dashboard")}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
-            activePage === 'dashboard' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
+            activePage === "dashboard"
+              ? "text-emerald-400 font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           <LayoutDashboard className="w-5 h-5" />
           <span className="text-[10px] tracking-tight">Home</span>
-          {activePage === 'dashboard' && (
+          {activePage === "dashboard" && (
             <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
           )}
         </button>
 
         {/* 2. Transactions */}
         <button
-          onClick={() => onNavigate('transactions')}
+          onClick={() => onNavigate("transactions")}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
-            activePage === 'transactions' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
+            activePage === "transactions"
+              ? "text-emerald-400 font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           <Receipt className="w-5 h-5" />
           <span className="text-[10px] tracking-tight">Trans.</span>
-          {activePage === 'transactions' && (
+          {activePage === "transactions" && (
             <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
           )}
         </button>
@@ -55,28 +68,32 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) 
 
         {/* 4. Budget */}
         <button
-          onClick={() => onNavigate('budget')}
+          onClick={() => onNavigate("budget")}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
-            activePage === 'budget' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
+            activePage === "budget"
+              ? "text-emerald-400 font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           <Target className="w-5 h-5" />
           <span className="text-[10px] tracking-tight">Budget</span>
-          {activePage === 'budget' && (
+          {activePage === "budget" && (
             <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
           )}
         </button>
 
         {/* 5. Reports */}
         <button
-          onClick={() => onNavigate('reports')}
+          onClick={() => onNavigate("reports")}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-1 rounded-xl transition-all ${
-            activePage === 'reports' ? 'text-emerald-400 font-semibold' : 'text-slate-400 hover:text-slate-200'
+            activePage === "reports"
+              ? "text-emerald-400 font-semibold"
+              : "text-slate-400 hover:text-slate-200"
           }`}
         >
           <BarChart2 className="w-5 h-5" />
           <span className="text-[10px] tracking-tight">Reports</span>
-          {activePage === 'reports' && (
+          {activePage === "reports" && (
             <span className="w-1 h-1 rounded-full bg-emerald-400 -mb-1" />
           )}
         </button>

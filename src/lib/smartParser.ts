@@ -1,4 +1,4 @@
-import { TransactionType } from '../types';
+import { TransactionType } from "../types";
 
 export interface ParsedTransaction {
   amount: number;
@@ -19,95 +19,312 @@ interface CategoryRule {
 const CATEGORY_RULES: CategoryRule[] = [
   // --- EXPENSES ---
   {
-    category: 'Food',
-    type: 'expense',
+    category: "Food",
+    type: "expense",
     keywords: [
-      'makan siang', 'makan malam', 'sarapan', 'makan', 'lunch', 'dinner', 'breakfast',
-      'nasi padang', 'padang', 'nasi', 'ayam geprek', 'geprek', 'ayam', 'bakso', 'mie ayam', 'mie',
-      'seblak', 'sate', 'martabak', 'soto', 'rawon', 'pecel', 'rendang', 'gudeg',
-      'pizza', 'burger', 'mcd', 'kfc', 'hokben', 'sushi', 'dunkin', 'roti', 'kue',
-      'snack', 'cemilan', 'gofood', 'grabfood', 'shopeefood', 'warteg', 'restoran', 'cafe',
-      'makanan', 'jajan', 'kuliner', 'supermarket', 'buah', 'sayur'
+      "makan siang",
+      "makan malam",
+      "sarapan",
+      "makan",
+      "lunch",
+      "dinner",
+      "breakfast",
+      "nasi padang",
+      "padang",
+      "nasi",
+      "ayam geprek",
+      "geprek",
+      "ayam",
+      "bakso",
+      "mie ayam",
+      "mie",
+      "seblak",
+      "sate",
+      "martabak",
+      "soto",
+      "rawon",
+      "pecel",
+      "rendang",
+      "gudeg",
+      "pizza",
+      "burger",
+      "mcd",
+      "kfc",
+      "hokben",
+      "sushi",
+      "dunkin",
+      "roti",
+      "kue",
+      "snack",
+      "cemilan",
+      "gofood",
+      "grabfood",
+      "shopeefood",
+      "warteg",
+      "restoran",
+      "cafe",
+      "makanan",
+      "jajan",
+      "kuliner",
+      "supermarket",
+      "buah",
+      "sayur",
     ],
   },
   {
-    category: 'Transportation',
-    type: 'expense',
+    category: "Transportation",
+    type: "expense",
     keywords: [
-      'gojek', 'goride', 'gocar', 'grab', 'grabcar', 'grabfood', 'maxim', 'indriver',
-      'ojol', 'bensin', 'pertalite', 'pertamax', 'solar', 'shell', 'spbu',
-      'parkir', 'tol', 'e-toll', 'krl', 'mrt', 'lrt', 'kereta', 'commuter',
-      'busway', 'transjakarta', 'tj', 'taksi', 'taxi', 'angkot', 'ojek',
-      'service motor', 'servis', 'ganti oli', 'tambal ban', 'cuci motor', 'cuci mobil',
-      'transportasi', 'transport', 'ongkir', 'travel', 'tiket'
+      "gojek",
+      "goride",
+      "gocar",
+      "grab",
+      "grabcar",
+      "grabfood",
+      "maxim",
+      "indriver",
+      "ojol",
+      "bensin",
+      "pertalite",
+      "pertamax",
+      "solar",
+      "shell",
+      "spbu",
+      "parkir",
+      "tol",
+      "e-toll",
+      "krl",
+      "mrt",
+      "lrt",
+      "kereta",
+      "commuter",
+      "busway",
+      "transjakarta",
+      "tj",
+      "taksi",
+      "taxi",
+      "angkot",
+      "ojek",
+      "service motor",
+      "servis",
+      "ganti oli",
+      "tambal ban",
+      "cuci motor",
+      "cuci mobil",
+      "transportasi",
+      "transport",
+      "ongkir",
+      "travel",
+      "tiket",
     ],
   },
   {
-    category: 'Drinks',
-    type: 'expense',
+    category: "Drinks",
+    type: "expense",
     keywords: [
-      'kopi', 'coffee', 'ngopi', 'es kopi', 'latte', 'cappuccino', 'americano',
-      'starbucks', 'janji jiwa', 'kopi kenangan', 'fore', 'point coffee', 'tomoro',
-      'boba', 'chatime', 'mixue', 'es teh', 'esteh', 'teh', 'jus', 'juice', 'smoothie',
-      'minum', 'minuman', 'aqua', 'le minerale', 'air mineral', 'susu', 'boba'
+      "kopi",
+      "coffee",
+      "ngopi",
+      "es kopi",
+      "latte",
+      "cappuccino",
+      "americano",
+      "starbucks",
+      "janji jiwa",
+      "kopi kenangan",
+      "fore",
+      "point coffee",
+      "tomoro",
+      "boba",
+      "chatime",
+      "mixue",
+      "es teh",
+      "esteh",
+      "teh",
+      "jus",
+      "juice",
+      "smoothie",
+      "minum",
+      "minuman",
+      "aqua",
+      "le minerale",
+      "air mineral",
+      "susu",
+      "boba",
     ],
   },
   {
-    category: 'Quota',
-    type: 'expense',
+    category: "Quota",
+    type: "expense",
     keywords: [
-      'pulsa', 'kuota', 'paket data', 'data', 'internet', 'telkomsel', 'by.u', 'byu',
-      'indosat', 'im3', 'xl', 'axis', 'tri', 'smartfren', 'wifi', 'indihome',
-      'biznet', 'first media', 'myrepublic', 'tagihan internet', 'topup pulsa'
+      "pulsa",
+      "kuota",
+      "paket data",
+      "data",
+      "internet",
+      "telkomsel",
+      "by.u",
+      "byu",
+      "indosat",
+      "im3",
+      "xl",
+      "axis",
+      "tri",
+      "smartfren",
+      "wifi",
+      "indihome",
+      "biznet",
+      "first media",
+      "myrepublic",
+      "tagihan internet",
+      "topup pulsa",
     ],
   },
   {
-    category: 'Personal',
-    type: 'expense',
+    category: "Personal",
+    type: "expense",
     keywords: [
-      'baju', 'celana', 'kaos', 'kemeja', 'sepatu', 'sandal', 'tas', 'jaket',
-      'skincare', 'makeup', 'parfum', 'facial', 'potong rambut', 'barbershop', 'salon',
-      'nonton', 'bioskop', 'cinema', 'xxi', 'cgv', 'netflix', 'spotify', 'youtube premium',
-      'game', 'steam', 'playstation', 'topup game', 'diamond', 'mlbb', 'pubg', 'genshin',
-      'gym', 'fitness', 'olahraga', 'futsal', 'badminton', 'shopee', 'tokopedia', 'lazada',
-      'tiktok shop', 'belanja', 'pakaian', 'fashion', 'hobi', 'buku', 'novel'
+      "baju",
+      "celana",
+      "kaos",
+      "kemeja",
+      "sepatu",
+      "sandal",
+      "tas",
+      "jaket",
+      "skincare",
+      "makeup",
+      "parfum",
+      "facial",
+      "potong rambut",
+      "barbershop",
+      "salon",
+      "nonton",
+      "bioskop",
+      "cinema",
+      "xxi",
+      "cgv",
+      "netflix",
+      "spotify",
+      "youtube premium",
+      "game",
+      "steam",
+      "playstation",
+      "topup game",
+      "diamond",
+      "mlbb",
+      "pubg",
+      "genshin",
+      "gym",
+      "fitness",
+      "olahraga",
+      "futsal",
+      "badminton",
+      "shopee",
+      "tokopedia",
+      "lazada",
+      "tiktok shop",
+      "belanja",
+      "pakaian",
+      "fashion",
+      "hobi",
+      "buku",
+      "novel",
     ],
   },
   {
-    category: 'Household',
-    type: 'expense',
+    category: "Household",
+    type: "expense",
     keywords: [
-      'listrik', 'pln', 'token listrik', 'token', 'pdam', 'tagihan air', 'air pdam',
-      'gas lpg', 'gas', 'galon', 'isi ulang galon', 'sabun', 'shampoo', 'deterjen',
-      'pewangi', 'pasta gigi', 'odol', 'tisu', 'bayar kos', 'kosan', 'kost',
-      'kontrakan', 'sewa rumah', 'iuran', 'kebersihan', 'keamanan', 'ipl',
-      'renovasi', 'perabot', 'belanja bulanan', 'indomaret', 'alfamart', 'alfamidi'
+      "listrik",
+      "pln",
+      "token listrik",
+      "token",
+      "pdam",
+      "tagihan air",
+      "air pdam",
+      "gas lpg",
+      "gas",
+      "galon",
+      "isi ulang galon",
+      "sabun",
+      "shampoo",
+      "deterjen",
+      "pewangi",
+      "pasta gigi",
+      "odol",
+      "tisu",
+      "bayar kos",
+      "kosan",
+      "kost",
+      "kontrakan",
+      "sewa rumah",
+      "iuran",
+      "kebersihan",
+      "keamanan",
+      "ipl",
+      "renovasi",
+      "perabot",
+      "belanja bulanan",
+      "indomaret",
+      "alfamart",
+      "alfamidi",
     ],
   },
 
   // --- INCOMES ---
   {
-    category: 'Salary',
-    type: 'income',
+    category: "Salary",
+    type: "income",
     keywords: [
-      'gaji', 'salary', 'payroll', 'upah', 'honor', 'gajian', 'penghasilan bulanan',
-      'tunjangan', 'thr', 'gaji pokok'
+      "gaji",
+      "salary",
+      "payroll",
+      "upah",
+      "honor",
+      "gajian",
+      "penghasilan bulanan",
+      "tunjangan",
+      "thr",
+      "gaji pokok",
     ],
   },
   {
-    category: 'Bonus',
-    type: 'income',
+    category: "Bonus",
+    type: "income",
     keywords: [
-      'bonus', 'insentif', 'hadiah', 'angpao', 'kado', 'giveaway', 'reward',
-      'cashback', 'dikasih', 'hibah', 'warisan', 'transferan'
+      "bonus",
+      "insentif",
+      "hadiah",
+      "angpao",
+      "kado",
+      "giveaway",
+      "reward",
+      "cashback",
+      "dikasih",
+      "hibah",
+      "warisan",
+      "transferan",
     ],
   },
   {
-    category: 'Freelance',
-    type: 'income',
+    category: "Freelance",
+    type: "income",
     keywords: [
-      'freelance', 'side job', 'project', 'proyek', 'jasa', 'desain', 'coding',
-      'website', 'klien', 'client', 'komisi', 'fee', 'side hustle', 'penjualan'
+      "freelance",
+      "side job",
+      "project",
+      "proyek",
+      "jasa",
+      "desain",
+      "coding",
+      "website",
+      "klien",
+      "client",
+      "komisi",
+      "fee",
+      "side hustle",
+      "penjualan",
     ],
   },
 ];
@@ -116,14 +333,18 @@ const CATEGORY_RULES: CategoryRule[] = [
  * Parses numeric amount from text patterns:
  * e.g., '18k', '18.000', '18000', '18rb', '18 ribu', '2.5jt', '2,5jt', '2.5 juta', 'Rp 18.000', 'Rp18k'
  */
-export function extractAmount(text: string): { amount: number; matchedText: string } | null {
+export function extractAmount(
+  text: string,
+): { amount: number; matchedText: string } | null {
   // Normalize string for regex matching
   const cleaned = text.trim();
 
   // Pattern 1: Millions ('jt', 'juta', 'm') -> e.g. 5jt, 2.5jt, 2,5 juta, 10 juta
-  const millionMatch = cleaned.match(/(?:rp\.?\s*)?(\d+(?:[.,]\d+)?)\s*(?:jt|juta|million|m\b)/i);
+  const millionMatch = cleaned.match(
+    /(?:rp\.?\s*)?(\d+(?:[.,]\d+)?)\s*(?:jt|juta|million|m\b)/i,
+  );
   if (millionMatch) {
-    const rawVal = parseFloat(millionMatch[1].replace(',', '.'));
+    const rawVal = parseFloat(millionMatch[1].replace(",", "."));
     if (!isNaN(rawVal) && rawVal > 0) {
       return {
         amount: Math.round(rawVal * 1_000_000),
@@ -133,9 +354,11 @@ export function extractAmount(text: string): { amount: number; matchedText: stri
   }
 
   // Pattern 2: Thousands ('k', 'rb', 'ribu') -> e.g. 18k, 18.5k, 18rb, 18 ribu, 9k
-  const thousandMatch = cleaned.match(/(?:rp\.?\s*)?(\d+(?:[.,]\d+)?)\s*(?:k|rb|ribu|thousand)\b/i);
+  const thousandMatch = cleaned.match(
+    /(?:rp\.?\s*)?(\d+(?:[.,]\d+)?)\s*(?:k|rb|ribu|thousand)\b/i,
+  );
   if (thousandMatch) {
-    const rawVal = parseFloat(thousandMatch[1].replace(',', '.'));
+    const rawVal = parseFloat(thousandMatch[1].replace(",", "."));
     if (!isNaN(rawVal) && rawVal > 0) {
       return {
         amount: Math.round(rawVal * 1_000),
@@ -145,9 +368,11 @@ export function extractAmount(text: string): { amount: number; matchedText: stri
   }
 
   // Pattern 3: Formatted IDR numbers with dots/commas -> e.g. Rp 18.000, 18.000, 150.000, 1.500.000
-  const formattedIdrMatch = cleaned.match(/(?:rp\.?\s*)?(\d{1,3}(?:\.\d{3})+)(?:,\d+)?/i);
+  const formattedIdrMatch = cleaned.match(
+    /(?:rp\.?\s*)?(\d{1,3}(?:\.\d{3})+)(?:,\d+)?/i,
+  );
   if (formattedIdrMatch) {
-    const rawVal = parseInt(formattedIdrMatch[1].replace(/\./g, ''), 10);
+    const rawVal = parseInt(formattedIdrMatch[1].replace(/\./g, ""), 10);
     if (!isNaN(rawVal) && rawVal > 0) {
       return {
         amount: rawVal,
@@ -183,9 +408,9 @@ export function parseSmartTransaction(input: string): ParsedTransaction {
   if (!trimmed) {
     return {
       amount: 0,
-      category: 'Food',
-      type: 'expense',
-      description: '',
+      category: "Food",
+      type: "expense",
+      description: "",
       confidence: 0,
     };
   }
@@ -197,15 +422,18 @@ export function parseSmartTransaction(input: string): ParsedTransaction {
 
   // 2. Identify Category and Type
   const lowerInput = trimmed.toLowerCase();
-  let matchedCategory = 'Food';
-  let matchedType: TransactionType = 'expense';
-  let matchedKeyword = '';
+  let matchedCategory = "Food";
+  let matchedType: TransactionType = "expense";
+  let matchedKeyword = "";
   let highestKeywordLength = 0;
 
   for (const rule of CATEGORY_RULES) {
     for (const kw of rule.keywords) {
       // Look for whole word or substring match
-      const regex = new RegExp(`\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+      const regex = new RegExp(
+        `\\b${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+        "i",
+      );
       if (regex.test(lowerInput) || lowerInput.includes(kw)) {
         // Prioritize longer/more specific keyword matches
         if (kw.length > highestKeywordLength) {
@@ -221,12 +449,12 @@ export function parseSmartTransaction(input: string): ParsedTransaction {
   // 3. Clean up Description
   let cleanDesc = trimmed;
   if (matchedAmountText) {
-    cleanDesc = cleanDesc.replace(matchedAmountText, '');
+    cleanDesc = cleanDesc.replace(matchedAmountText, "");
   }
   // Strip trailing punctuation, extra spaces, "rp", "untuk", "beli", etc.
   cleanDesc = cleanDesc
-    .replace(/^[\s,.\-—:]+|[\s,.\-—:]+$/g, '')
-    .replace(/\s+/g, ' ')
+    .replace(/^[\s,.\-—:]+|[\s,.\-—:]+$/g, "")
+    .replace(/\s+/g, " ")
     .trim();
 
   // Capitalize first letter of description

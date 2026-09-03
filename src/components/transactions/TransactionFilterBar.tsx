@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   Search,
   Filter,
@@ -9,15 +9,19 @@ import {
   Layers,
   ArrowDownRight,
   ArrowUpRight,
-} from 'lucide-react';
-import { ALL_CATEGORIES, EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../../lib/constants';
-import { CategoryIcon } from '../common/CategoryIcon';
+} from "lucide-react";
+import {
+  ALL_CATEGORIES,
+  EXPENSE_CATEGORIES,
+  INCOME_CATEGORIES,
+} from "../../lib/constants";
+import { CategoryIcon } from "../common/CategoryIcon";
 
 interface TransactionFilterBarProps {
   searchQuery: string;
   onSearchChange: (val: string) => void;
-  typeFilter: 'all' | 'expense' | 'income';
-  onTypeFilterChange: (val: 'all' | 'expense' | 'income') => void;
+  typeFilter: "all" | "expense" | "income";
+  onTypeFilterChange: (val: "all" | "expense" | "income") => void;
   categoryFilter: string;
   onCategoryFilterChange: (val: string) => void;
   onReset: () => void;
@@ -38,10 +42,11 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const typeDropdownRef = useRef<HTMLDivElement>(null);
 
-  const isFiltered = searchQuery !== '' || typeFilter !== 'all' || categoryFilter !== '';
+  const isFiltered =
+    searchQuery !== "" || typeFilter !== "all" || categoryFilter !== "";
 
   const selectedCategoryObj = ALL_CATEGORIES.find(
-    (c) => c.name.toLowerCase() === categoryFilter.toLowerCase()
+    (c) => c.name.toLowerCase() === categoryFilter.toLowerCase(),
   );
 
   // Close dropdowns on click outside
@@ -60,8 +65,8 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
         setIsTypeOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSelectCategory = (catName: string) => {
@@ -69,14 +74,14 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
     setIsCategoryOpen(false);
   };
 
-  const handleSelectType = (type: 'all' | 'expense' | 'income') => {
+  const handleSelectType = (type: "all" | "expense" | "income") => {
     onTypeFilterChange(type);
     setIsTypeOpen(false);
   };
 
   // Helper for type trigger icon & label
   const renderTypeTrigger = () => {
-    if (typeFilter === 'expense') {
+    if (typeFilter === "expense") {
       return (
         <span className="flex items-center gap-1.5 text-rose-400 font-medium">
           <ArrowDownRight className="w-3.5 h-3.5" />
@@ -84,7 +89,7 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
         </span>
       );
     }
-    if (typeFilter === 'income') {
+    if (typeFilter === "income") {
       return (
         <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -116,7 +121,7 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
         />
         {searchQuery && (
           <button
-            onClick={() => onSearchChange('')}
+            onClick={() => onSearchChange("")}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white"
           >
             <X className="w-3.5 h-3.5" />
@@ -135,15 +140,15 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
               setIsCategoryOpen(false);
             }}
             className={`px-3 py-2 bg-slate-900/90 border rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2 transition-all cursor-pointer ${
-              typeFilter !== 'all'
-                ? 'border-emerald-500/60 text-white bg-slate-800/90 shadow-sm'
-                : 'border-slate-700/60 text-slate-200 hover:bg-slate-800/70'
-            } ${isTypeOpen ? 'ring-2 ring-emerald-500/40 border-emerald-500/60' : ''}`}
+              typeFilter !== "all"
+                ? "border-emerald-500/60 text-white bg-slate-800/90 shadow-sm"
+                : "border-slate-700/60 text-slate-200 hover:bg-slate-800/70"
+            } ${isTypeOpen ? "ring-2 ring-emerald-500/40 border-emerald-500/60" : ""}`}
           >
             {renderTypeTrigger()}
             <ChevronDown
               className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
-                isTypeOpen ? 'rotate-180 text-emerald-400' : ''
+                isTypeOpen ? "rotate-180 text-emerald-400" : ""
               }`}
             />
           </button>
@@ -155,11 +160,11 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                 {/* All Types */}
                 <button
                   type="button"
-                  onClick={() => handleSelectType('all')}
+                  onClick={() => handleSelectType("all")}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                    typeFilter === 'all'
-                      ? 'bg-slate-800 text-white border border-slate-700'
-                      : 'text-slate-300 hover:bg-slate-800/60'
+                    typeFilter === "all"
+                      ? "bg-slate-800 text-white border border-slate-700"
+                      : "text-slate-300 hover:bg-slate-800/60"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -168,17 +173,19 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                     </div>
                     <span>All Types</span>
                   </div>
-                  {typeFilter === 'all' && <Check className="w-3.5 h-3.5 text-emerald-400" />}
+                  {typeFilter === "all" && (
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  )}
                 </button>
 
                 {/* Expense Only */}
                 <button
                   type="button"
-                  onClick={() => handleSelectType('expense')}
+                  onClick={() => handleSelectType("expense")}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                    typeFilter === 'expense'
-                      ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                      : 'text-slate-300 hover:bg-slate-800/60'
+                    typeFilter === "expense"
+                      ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                      : "text-slate-300 hover:bg-slate-800/60"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -187,17 +194,19 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                     </div>
                     <span>Expense Only</span>
                   </div>
-                  {typeFilter === 'expense' && <Check className="w-3.5 h-3.5 text-rose-400" />}
+                  {typeFilter === "expense" && (
+                    <Check className="w-3.5 h-3.5 text-rose-400" />
+                  )}
                 </button>
 
                 {/* Income Only */}
                 <button
                   type="button"
-                  onClick={() => handleSelectType('income')}
+                  onClick={() => handleSelectType("income")}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                    typeFilter === 'income'
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                      : 'text-slate-300 hover:bg-slate-800/60'
+                    typeFilter === "income"
+                      ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                      : "text-slate-300 hover:bg-slate-800/60"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -206,7 +215,9 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                     </div>
                     <span>Income Only</span>
                   </div>
-                  {typeFilter === 'income' && <Check className="w-3.5 h-3.5 text-emerald-400" />}
+                  {typeFilter === "income" && (
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  )}
                 </button>
               </div>
             </div>
@@ -223,9 +234,9 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
             }}
             className={`px-3 py-2 bg-slate-900/90 border rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2 transition-all cursor-pointer ${
               categoryFilter
-                ? 'border-emerald-500/60 text-white bg-slate-800/90 shadow-sm'
-                : 'border-slate-700/60 text-slate-200 hover:bg-slate-800/70'
-            } ${isCategoryOpen ? 'ring-2 ring-emerald-500/40 border-emerald-500/60' : ''}`}
+                ? "border-emerald-500/60 text-white bg-slate-800/90 shadow-sm"
+                : "border-slate-700/60 text-slate-200 hover:bg-slate-800/70"
+            } ${isCategoryOpen ? "ring-2 ring-emerald-500/40 border-emerald-500/60" : ""}`}
           >
             {selectedCategoryObj ? (
               <span className="flex items-center gap-1.5 min-w-0 max-w-[140px] truncate">
@@ -245,7 +256,7 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
             )}
             <ChevronDown
               className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
-                isCategoryOpen ? 'rotate-180 text-emerald-400' : ''
+                isCategoryOpen ? "rotate-180 text-emerald-400" : ""
               }`}
             />
           </button>
@@ -256,18 +267,20 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
               {/* All Categories Option */}
               <button
                 type="button"
-                onClick={() => handleSelectCategory('')}
+                onClick={() => handleSelectCategory("")}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                  categoryFilter === ''
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                    : 'text-slate-300 hover:bg-slate-800/80'
+                  categoryFilter === ""
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                    : "text-slate-300 hover:bg-slate-800/80"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <Tag className="w-4 h-4 text-slate-400" />
                   <span>All Categories</span>
                 </div>
-                {categoryFilter === '' && <Check className="w-3.5 h-3.5 text-emerald-400" />}
+                {categoryFilter === "" && (
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                )}
               </button>
 
               {/* Expense Section */}
@@ -277,7 +290,8 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                 </p>
                 <div className="space-y-0.5 mt-0.5">
                   {EXPENSE_CATEGORIES.map((cat) => {
-                    const isSelected = categoryFilter.toLowerCase() === cat.name.toLowerCase();
+                    const isSelected =
+                      categoryFilter.toLowerCase() === cat.name.toLowerCase();
                     return (
                       <button
                         key={cat.id}
@@ -285,8 +299,8 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                         onClick={() => handleSelectCategory(cat.name)}
                         className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors group ${
                           isSelected
-                            ? 'bg-slate-800 border border-emerald-500/50 text-white font-semibold'
-                            : 'text-slate-300 hover:bg-slate-800/60'
+                            ? "bg-slate-800 border border-emerald-500/50 text-white font-semibold"
+                            : "text-slate-300 hover:bg-slate-800/60"
                         }`}
                       >
                         <div className="flex items-center gap-2 min-w-0">
@@ -298,7 +312,9 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                           />
                           <span className="truncate">{cat.name}</span>
                         </div>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+                        {isSelected && (
+                          <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        )}
                       </button>
                     );
                   })}
@@ -312,7 +328,8 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                 </p>
                 <div className="space-y-0.5 mt-0.5">
                   {INCOME_CATEGORIES.map((cat) => {
-                    const isSelected = categoryFilter.toLowerCase() === cat.name.toLowerCase();
+                    const isSelected =
+                      categoryFilter.toLowerCase() === cat.name.toLowerCase();
                     return (
                       <button
                         key={cat.id}
@@ -320,8 +337,8 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                         onClick={() => handleSelectCategory(cat.name)}
                         className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors group ${
                           isSelected
-                            ? 'bg-slate-800 border border-emerald-500/50 text-white font-semibold'
-                            : 'text-slate-300 hover:bg-slate-800/60'
+                            ? "bg-slate-800 border border-emerald-500/50 text-white font-semibold"
+                            : "text-slate-300 hover:bg-slate-800/60"
                         }`}
                       >
                         <div className="flex items-center gap-2 min-w-0">
@@ -333,7 +350,9 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
                           />
                           <span className="truncate">{cat.name}</span>
                         </div>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+                        {isSelected && (
+                          <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        )}
                       </button>
                     );
                   })}

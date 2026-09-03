@@ -1,7 +1,7 @@
-import React from 'react';
-import { useRegisterSW } from 'virtual:pwa-register/react';
-import { RefreshCw, Download, WifiOff, X } from 'lucide-react';
-import { usePWA } from '../../hooks/usePWA';
+import React from "react";
+import { useRegisterSW } from "virtual:pwa-register/react";
+import { RefreshCw, Download, WifiOff, X } from "lucide-react";
+import { usePWA } from "../../hooks/usePWA";
 
 export const PWAPrompt: React.FC = () => {
   const { isInstallable, isOffline, installApp } = usePWA();
@@ -12,10 +12,10 @@ export const PWAPrompt: React.FC = () => {
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
-      console.log('SW Registered: ', r);
+      console.log("SW Registered: ", r);
     },
     onRegisterError(error) {
-      console.error('SW registration error', error);
+      console.error("SW registration error", error);
     },
   });
 
@@ -25,7 +25,10 @@ export const PWAPrompt: React.FC = () => {
       {isOffline && (
         <div className="bg-amber-500/90 text-slate-950 px-4 py-2 text-xs font-semibold flex items-center justify-center gap-2 sticky top-0 z-50 shadow-md backdrop-blur-md">
           <WifiOff className="w-4 h-4" />
-          <span>Mode Offline: Anda tetap dapat melihat data yang tersimpan di memori perangkat.</span>
+          <span>
+            Mode Offline: Anda tetap dapat melihat data yang tersimpan di memori
+            perangkat.
+          </span>
         </div>
       )}
 
@@ -37,9 +40,12 @@ export const PWAPrompt: React.FC = () => {
               <RefreshCw className="w-5 h-5 animate-spin" />
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-white">Versi Baru Tersedia!</h4>
+              <h4 className="text-sm font-bold text-white">
+                Versi Baru Tersedia!
+              </h4>
               <p className="text-xs text-slate-300 mt-0.5">
-                Pembaruan aplikasi telah diunduh. Muat ulang untuk mendapatkan fitur terbaru.
+                Pembaruan aplikasi telah diunduh. Muat ulang untuk mendapatkan
+                fitur terbaru.
               </p>
               <div className="flex items-center gap-2 mt-3">
                 <button

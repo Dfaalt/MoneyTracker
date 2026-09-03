@@ -1,8 +1,8 @@
-import React from 'react';
-import { Plus, Wallet, FileQuestion } from 'lucide-react';
+import React from "react";
+import { Plus, Wallet, FileQuestion } from "lucide-react";
 
 interface EmptyStateProps {
-  type?: 'transactions' | 'budget' | 'search' | 'generic';
+  type?: "transactions" | "budget" | "search" | "generic";
   title?: string;
   description?: string;
   actionLabel?: string;
@@ -10,32 +10,34 @@ interface EmptyStateProps {
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
-  type = 'transactions',
+  type = "transactions",
   title,
   description,
   actionLabel,
   onAction,
 }) => {
   let defaultIcon = FileQuestion;
-  let defaultTitle = 'No data available';
-  let defaultDesc = 'There is currently no information to display.';
-  let defaultAction = 'Add New';
+  let defaultTitle = "No data available";
+  let defaultDesc = "There is currently no information to display.";
+  let defaultAction = "Add New";
 
-  if (type === 'transactions') {
+  if (type === "transactions") {
     defaultIcon = Wallet;
-    defaultTitle = 'No transactions yet.';
-    defaultDesc = 'Start tracking your money today and take control of your financial freedom.';
-    defaultAction = 'Add Transaction';
-  } else if (type === 'budget') {
+    defaultTitle = "No transactions yet.";
+    defaultDesc =
+      "Start tracking your money today and take control of your financial freedom.";
+    defaultAction = "Add Transaction";
+  } else if (type === "budget") {
     defaultIcon = Wallet;
-    defaultTitle = 'No budget set for this month.';
-    defaultDesc = 'Set a monthly spending limit to monitor and control your expenses.';
-    defaultAction = 'Set Budget';
-  } else if (type === 'search') {
+    defaultTitle = "No budget set for this month.";
+    defaultDesc =
+      "Set a monthly spending limit to monitor and control your expenses.";
+    defaultAction = "Set Budget";
+  } else if (type === "search") {
     defaultIcon = FileQuestion;
-    defaultTitle = 'No matching transactions found.';
-    defaultDesc = 'Try adjusting your search keywords or filter criteria.';
-    defaultAction = 'Clear Filters';
+    defaultTitle = "No matching transactions found.";
+    defaultDesc = "Try adjusting your search keywords or filter criteria.";
+    defaultAction = "Clear Filters";
   }
 
   const Icon = defaultIcon;
@@ -50,7 +52,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       </div>
 
       <h3 className="text-lg font-bold text-white mb-1.5">{displayTitle}</h3>
-      <p className="text-sm text-slate-400 max-w-sm mb-6 leading-relaxed">{displayDesc}</p>
+      <p className="text-sm text-slate-400 max-w-sm mb-6 leading-relaxed">
+        {displayDesc}
+      </p>
 
       {onAction && (
         <button

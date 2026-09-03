@@ -1,9 +1,9 @@
-import React from 'react';
-import { Transaction } from '../../types';
-import { formatDate, formatRupiah } from '../../lib/utils';
-import { ALL_CATEGORIES } from '../../lib/constants';
-import { CategoryIcon } from '../common/CategoryIcon';
-import { Edit2, Trash2, ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import React from "react";
+import { Transaction } from "../../types";
+import { formatDate, formatRupiah } from "../../lib/utils";
+import { ALL_CATEGORIES } from "../../lib/constants";
+import { CategoryIcon } from "../common/CategoryIcon";
+import { Edit2, Trash2, ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 interface TransactionTableProps {
   transactions: Transaction[];
@@ -31,9 +31,9 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
         </thead>
         <tbody className="divide-y divide-slate-800/60">
           {transactions.map((tx) => {
-            const isIncome = tx.type === 'income';
+            const isIncome = tx.type === "income";
             const cat = ALL_CATEGORIES.find(
-              (c) => c.name.toLowerCase() === tx.category.toLowerCase()
+              (c) => c.name.toLowerCase() === tx.category.toLowerCase(),
             );
 
             return (
@@ -43,7 +43,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
               >
                 {/* Date */}
                 <td className="py-3.5 px-5 font-mono text-xs text-slate-400 whitespace-nowrap">
-                  {formatDate(tx.transaction_date, 'short')}
+                  {formatDate(tx.transaction_date, "short")}
                 </td>
 
                 {/* Type */}
@@ -51,8 +51,8 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   <span
                     className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                       isIncome
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                        : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
                     }`}
                   >
                     {isIncome ? (
@@ -60,7 +60,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                     ) : (
                       <ArrowDownRight className="w-3 h-3" />
                     )}
-                    {isIncome ? 'Income' : 'Expense'}
+                    {isIncome ? "Income" : "Expense"}
                   </span>
                 </td>
 
@@ -80,17 +80,19 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                 {/* Description */}
                 <td className="py-3.5 px-5 font-medium text-white max-w-xs truncate">
                   {tx.description || (
-                    <span className="text-slate-500 italic">No description</span>
+                    <span className="text-slate-500 italic">
+                      No description
+                    </span>
                   )}
                 </td>
 
                 {/* Amount */}
                 <td
                   className={`py-3.5 px-5 text-right font-mono font-bold whitespace-nowrap ${
-                    isIncome ? 'text-emerald-400' : 'text-slate-100'
+                    isIncome ? "text-emerald-400" : "text-slate-100"
                   }`}
                 >
-                  {isIncome ? '+' : '-'}
+                  {isIncome ? "+" : "-"}
                   {formatRupiah(tx.amount)}
                 </td>
 

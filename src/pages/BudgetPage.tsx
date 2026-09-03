@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
-import { useFinance } from '../context/FinanceContext';
-import { formatRupiah, formatMonthYear, getBudgetStatusConfig, calculateBudgetStatus } from '../lib/utils';
-import { BudgetModal } from '../components/budget/BudgetModal';
-import { Plus, Edit3, Calendar } from 'lucide-react';
+import React, { useState } from "react";
+import { useFinance } from "../context/FinanceContext";
+import {
+  formatRupiah,
+  formatMonthYear,
+  getBudgetStatusConfig,
+  calculateBudgetStatus,
+} from "../lib/utils";
+import { BudgetModal } from "../components/budget/BudgetModal";
+import { Plus, Edit3, Calendar } from "lucide-react";
 
 export const BudgetPage: React.FC = () => {
-  const { budgets, transactions, selectedMonth, setIsBudgetModalOpen } = useFinance();
-  const [editingTargetMonth, setEditingTargetMonth] = useState<string | null>(null);
+  const { budgets, transactions, selectedMonth, setIsBudgetModalOpen } =
+    useFinance();
+  const [editingTargetMonth, setEditingTargetMonth] = useState<string | null>(
+    null,
+  );
 
   // Group transactions by month for historical budget progress
   const monthlyExpenseMap = new Map<string, number>();
   transactions.forEach((tx) => {
-    if (tx.type === 'expense') {
+    if (tx.type === "expense") {
       const m = tx.transaction_date.slice(0, 7);
-      monthlyExpenseMap.set(m, (monthlyExpenseMap.get(m) || 0) + Number(tx.amount));
+      monthlyExpenseMap.set(
+        m,
+        (monthlyExpenseMap.get(m) || 0) + Number(tx.amount),
+      );
     }
   });
 
@@ -21,16 +32,24 @@ export const BudgetPage: React.FC = () => {
   const currentBudget = budgets.find((b) => b.month.startsWith(selectedMonth));
   const currentSpent = monthlyExpenseMap.get(selectedMonth) || 0;
   const currentBudgetAmount = currentBudget ? Number(currentBudget.amount) : 0;
-  const currentStatus = calculateBudgetStatus(currentSpent, currentBudgetAmount);
+  const currentStatus = calculateBudgetStatus(
+    currentSpent,
+    currentBudgetAmount,
+  );
   const currentConfig = getBudgetStatusConfig(currentStatus);
-  const currentPercentage = currentBudgetAmount > 0 ? Math.round((currentSpent / currentBudgetAmount) * 1000) / 10 : 0;
+  const currentPercentage =
+    currentBudgetAmount > 0
+      ? Math.round((currentSpent / currentBudgetAmount) * 1000) / 10
+      : 0;
 
   return (
     <div className="space-y-8 animate-fade-in pb-16">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-white tracking-tight">Budget Management</h2>
+          <h2 className="text-2xl font-extrabold text-white tracking-tight">
+            Budget Management
+          </h2>
           <p className="text-xs text-slate-400 mt-0.5">
             Kontrol dan pantau batas pengeluaran bulanan Anda.
           </p>
@@ -44,7 +63,9 @@ export const BudgetPage: React.FC = () => {
           className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-950/50 flex items-center gap-1.5 transition-all hover:scale-105"
         >
           <Plus className="w-4 h-4" />
-          <span>{currentBudgetAmount > 0 ? 'Edit Current Budget' : 'Set New Budget'}</span>
+          <span>
+            {currentBudgetAmount > 0 ? "Edit Current Budget" : "Set New Budget"}
+          </span>
         </button>
       </div>
 
@@ -64,26 +85,35 @@ export const BudgetPage: React.FC = () => {
             </div>
 
             <h3 className="text-3xl sm:text-4xl font-extrabold text-white font-mono">
-              {currentBudgetAmount > 0 ? formatRupiah(currentBudgetAmount) : 'No Budget Set'}
+              {currentBudgetAmount > 0
+                ? formatRupiah(currentBudgetAmount)
+                : "No Budget Set"}
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-400 max-w-md">
               {currentBudgetAmount > 0
                 ? `Telah digunakan ${formatRupiah(currentSpent)} (${currentPercentage}%) dari total alokasi budget.`
-                : 'Belum ada batas budget untuk bulan ini. Tetapkan limit sekarang untuk memantau pengeluaran.'}
+                : "Belum ada batas budget untuk bulan ini. Tetapkan limit sekarang untuk memantau pengeluaran."}
             </p>
           </div>
 
           {currentBudgetAmount > 0 && (
             <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col items-center justify-center min-w-[200px] text-center space-y-1">
-              <span className="text-xs text-slate-400 uppercase font-semibold">Remaining</span>
+              <span className="text-xs text-slate-400 uppercase font-semibold">
+                Remaining
+              </span>
               <span
-                className={`text-2xl font-bold font-mono ${currentBudgetAmount - currentSpent < 0 ? 'text-rose-400' : 'text-emerald-400'
-                  }`}
+                className={`text-2xl font-bold font-mono ${
+                  currentBudgetAmount - currentSpent < 0
+                    ? "text-rose-400"
+                    : "text-emerald-400"
+                }`}
               >
                 {formatRupiah(currentBudgetAmount - currentSpent)}
               </span>
-              <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${currentConfig.badgeBg}`}>
+              <span
+                className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${currentConfig.badgeBg}`}
+              >
                 {currentConfig.label} ({currentPercentage}%)
               </span>
             </div>
@@ -125,14 +155,22 @@ export const BudgetPage: React.FC = () => {
             return (
               <div
                 key={b.id || b.month}
-                className={`p-5 rounded-2xl glass-card border transition-all space-y-4 ${isCurrent ? 'border-indigo-500/50 shadow-glow-indigo' : 'border-slate-800 hover:border-slate-700'
-                  }`}
+                className={`p-5 rounded-2xl glass-card border transition-all space-y-4 ${
+                  isCurrent
+                    ? "border-indigo-500/50 shadow-glow-indigo"
+                    : "border-slate-800 hover:border-slate-700"
+                }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h5 className="text-base font-bold text-white">{formatMonthYear(b.month)}</h5>
+                    <h5 className="text-base font-bold text-white">
+                      {formatMonthYear(b.month)}
+                    </h5>
                     <span className="text-xs font-mono text-slate-400">
-                      Limit: <strong className="text-slate-200">{formatRupiah(limit)}</strong>
+                      Limit:{" "}
+                      <strong className="text-slate-200">
+                        {formatRupiah(limit)}
+                      </strong>
                     </span>
                   </div>
 
@@ -162,9 +200,15 @@ export const BudgetPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={`p-2 rounded-xl text-[11px] flex items-center justify-between border ${cfg.badgeBg}`}>
+                <div
+                  className={`p-2 rounded-xl text-[11px] flex items-center justify-between border ${cfg.badgeBg}`}
+                >
                   <span>Status: {cfg.label}</span>
-                  <span>{limit - spent >= 0 ? `${formatRupiah(limit - spent)} sisa` : 'Over budget'}</span>
+                  <span>
+                    {limit - spent >= 0
+                      ? `${formatRupiah(limit - spent)} sisa`
+                      : "Over budget"}
+                  </span>
                 </div>
               </div>
             );
