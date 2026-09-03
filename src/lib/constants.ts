@@ -42,7 +42,7 @@ const EXPENSE_POOL = [
   { category: 'Transportation', desc: 'Isi Bensin Pertamax & Tol', amount: 230000 },
   { category: 'Transportation', desc: 'Service & Ganti Oli Motor', amount: 175000 },
   { category: 'Transportation', desc: 'Tiket KRL & MRT Commuter', amount: 25000 },
-  { category: 'Drinks', desc: 'Kopi Kenangan Mantan sore', amount: 24000 },
+  { category: 'Drinks', desc: 'Kopi Kenangan sore', amount: 24000 },
   { category: 'Drinks', desc: 'Starbucks Caramel Macchiato', amount: 58000 },
   { category: 'Drinks', desc: 'Chatime Milk Tea boba', amount: 32000 },
   { category: 'Drinks', desc: 'Jus Buah Segar', amount: 18000 },
