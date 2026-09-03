@@ -70,7 +70,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                     <CategoryIcon
                       category={tx.category}
                       icon={cat?.icon}
-                      size={18}
+                      size={24}
                       trigger="hover"
                     />
                     <span>{tx.category}</span>

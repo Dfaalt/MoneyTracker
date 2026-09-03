@@ -60,7 +60,7 @@ export const CategoryDonutChart: React.FC = () => {
                     return (
                       <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 shadow-xl text-xs space-y-1">
                         <div className="flex items-center gap-1.5 font-bold text-white">
-                          <CategoryIcon category={data.category} icon={data.icon} size={16} trigger="hover" />
+                          <CategoryIcon category={data.category} icon={data.icon} size={22} trigger="hover" />
                           <span>{data.category}</span>
                         </div>
                         <div className="text-emerald-400 font-mono font-semibold">
@@ -140,7 +140,7 @@ export const CategoryDonutChart: React.FC = () => {
                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                     style={{ backgroundColor: cat.color }}
                   />
-                  <CategoryIcon category={cat.category} icon={cat.icon} size={20} trigger="hover" />
+                  <CategoryIcon category={cat.category} icon={cat.icon} size={26} trigger="hover" />
                   <span className="text-xs font-semibold text-slate-200 truncate">{cat.category}</span>
                 </div>
 

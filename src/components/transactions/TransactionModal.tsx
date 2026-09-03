@@ -261,7 +261,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                 <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
                   <span className="text-[10px] text-slate-400 block mb-0.5">Kategori</span>
                   <span className="font-semibold text-white flex items-center gap-1.5">
-                    <CategoryIcon category={parsedSmart.category} size={20} trigger="hover" />
+                    <CategoryIcon category={parsedSmart.category} size={24} trigger="hover" />
                     <span className="truncate">{parsedSmart.category}</span>
                   </span>
                 </div>
@@ -359,7 +359,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                       <CategoryIcon
                         category={cat.name}
                         icon={cat.icon}
-                        size={22}
+                        size={28}
                         trigger="hover"
                       />
                       <span className="text-xs font-semibold truncate flex-1">{cat.name}</span>

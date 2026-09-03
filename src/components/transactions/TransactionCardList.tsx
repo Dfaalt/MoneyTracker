@@ -39,7 +39,7 @@ export const TransactionCardList: React.FC<TransactionCardListProps> = ({
                 <CategoryIcon
                   category={tx.category}
                   icon={cat?.icon}
-                  size={26}
+                  size={30}
                   trigger="hover"
                 />
               </div>

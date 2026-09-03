@@ -41,7 +41,7 @@ export const ReportsPage: React.FC = () => {
             <CategoryIcon
               category={largestCategory?.category}
               icon={largestCategory?.icon}
-              size={32}
+              size={38}
               trigger="hover"
             />
             <h4 className="text-xl font-bold text-white truncate">{largestCategory?.category || 'None'}</h4>
@@ -108,7 +108,7 @@ export const ReportsPage: React.FC = () => {
                     <CategoryIcon
                       category={cat.category}
                       icon={cat.icon}
-                      size={20}
+                      size={26}
                       trigger="hover"
                     />
                     <span>{cat.category}</span>
