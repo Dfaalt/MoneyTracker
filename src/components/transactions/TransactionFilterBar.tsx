@@ -157,26 +157,21 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
           {isTypeOpen && (
             <div className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-52 rounded-2xl bg-slate-900/98 border border-slate-700/90 shadow-2xl shadow-black/90 p-1.5 z-50 animate-scale-in backdrop-blur-xl">
               <div className="space-y-1">
-                {/* All Types */}
-                <button
-                  type="button"
-                  onClick={() => handleSelectType("all")}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                    typeFilter === "all"
-                      ? "bg-slate-800 text-white border border-slate-700"
-                      : "text-slate-300 hover:bg-slate-800/60"
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300">
-                      <Layers className="w-3.5 h-3.5" />
+                {/* Reset to All Types (only when filtered) */}
+                {typeFilter !== "all" && (
+                  <button
+                    type="button"
+                    onClick={() => handleSelectType("all")}
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors border-b border-slate-800/80 mb-1 pb-2"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400">
+                        <Layers className="w-3.5 h-3.5" />
+                      </div>
+                      <span>Show All Types</span>
                     </div>
-                    <span>All Types</span>
-                  </div>
-                  {typeFilter === "all" && (
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  )}
-                </button>
+                  </button>
+                )}
 
                 {/* Expense Only */}
                 <button
@@ -264,27 +259,22 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
           {/* Category Popover Menu */}
           {isCategoryOpen && (
             <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto rounded-2xl bg-slate-900/98 border border-slate-700/90 shadow-2xl shadow-black/90 p-2 z-50 animate-scale-in backdrop-blur-xl">
-              {/* All Categories Option */}
-              <button
-                type="button"
-                onClick={() => handleSelectCategory("")}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                  categoryFilter === ""
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                    : "text-slate-300 hover:bg-slate-800/80"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Tag className="w-4 h-4 text-slate-400" />
-                  <span>All Categories</span>
-                </div>
-                {categoryFilter === "" && (
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                )}
-              </button>
+              {/* Reset to All Categories (only when a specific category is selected) */}
+              {categoryFilter !== "" && (
+                <button
+                  type="button"
+                  onClick={() => handleSelectCategory("")}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800/80 transition-colors border-b border-slate-800/80 mb-2 pb-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-4 h-4" />
+                    <span>Show All Categories</span>
+                  </div>
+                </button>
+              )}
 
               {/* Expense Section */}
-              <div className="mt-2 pt-2 border-t border-slate-800/80">
+              <div>
                 <p className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-rose-400/90">
                   Expense Categories
                 </p>
