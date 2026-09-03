@@ -45,32 +45,13 @@ async function generate() {
     .png({ quality: 100, compressionLevel: 9 })
     .toFile(path.join(publicDir, 'apple-touch-icon.png'));
 
-  // 5. Generate Maskable icon (512x512 with safe-zone padding and matching theme background #0B0F17)
-  const innerSize = Math.round(512 * 0.72); // 72% safe zone for Android adaptive icons
-  const resizedInnerBuffer = await sharp(sourceWalletPath)
-    .resize(innerSize, innerSize, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png()
-    .toBuffer();
-
-  await sharp({
-    create: {
-      width: 512,
-      height: 512,
-      channels: 4,
-      background: { r: 11, g: 15, b: 23, alpha: 1 }, // #0B0F17 dark theme
-    },
-  })
-    .composite([
-      {
-        input: resizedInnerBuffer,
-        top: Math.round((512 - innerSize) / 2),
-        left: Math.round((512 - innerSize) / 2),
-      },
-    ])
-    .png({ quality: 100 })
+  // 5. Generate Maskable icon (512x512 transparent)
+  await sharp(sourceWalletPath)
+    .resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png({ quality: 100, compressionLevel: 9 })
     .toFile(path.join(iconsDir, 'maskable-icon-512x512.png'));
 
-  console.log('✅ All PWA icons (512x512, 192x192, 64x64, apple-touch-icon, maskable) generated successfully from wallet.png!');
+  console.log('✅ All PWA icons (512x512, 192x192, 64x64, apple-touch-icon, transparent maskable) generated successfully from wallet.png!');
 }
 
 generate().catch(console.error);
