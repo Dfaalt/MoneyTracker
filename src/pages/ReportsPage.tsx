@@ -4,6 +4,7 @@ import { formatRupiah, formatMonthYear } from '../lib/utils';
 import { CategoryDonutChart } from '../components/dashboard/CategoryDonutChart';
 import { DailyExpenseBarChart } from '../components/dashboard/DailyExpenseBarChart';
 import { ExportDropdown } from '../components/common/ExportDropdown';
+import { CategoryIcon } from '../components/common/CategoryIcon';
 import { PieChart as PieIcon } from 'lucide-react';
 
 export const ReportsPage: React.FC = () => {
@@ -36,8 +37,13 @@ export const ReportsPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-2xl glass-card border border-slate-800 space-y-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Largest Category</span>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{largestCategory?.icon || '🏷️'}</span>
+          <div className="flex items-center gap-2.5">
+            <CategoryIcon
+              category={largestCategory?.category}
+              icon={largestCategory?.icon}
+              size={32}
+              trigger="hover"
+            />
             <h4 className="text-xl font-bold text-white truncate">{largestCategory?.category || 'None'}</h4>
           </div>
           <p className="text-xs font-mono text-emerald-400">
@@ -99,7 +105,12 @@ export const ReportsPage: React.FC = () => {
               {categorySummaries.map((cat) => (
                 <tr key={cat.category} className="hover:bg-slate-800/40 transition-colors">
                   <td className="py-3 px-4 font-sans font-medium text-white flex items-center gap-2">
-                    <span>{cat.icon}</span>
+                    <CategoryIcon
+                      category={cat.category}
+                      icon={cat.icon}
+                      size={20}
+                      trigger="hover"
+                    />
                     <span>{cat.category}</span>
                   </td>
                   <td className="py-3 px-4 text-center text-slate-400 font-sans">{cat.count}</td>

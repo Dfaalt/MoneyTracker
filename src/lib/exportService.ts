@@ -178,7 +178,7 @@ export function exportToPDF({
 
   const categoryRows = categorySummaries.map((cat, idx) => [
     (idx + 1).toString(),
-    `${cat.icon} ${cat.category}`,
+    `${cat.emoji || '🏷️'} ${cat.category}`,
     `${cat.count} Transaksi`,
     formatRupiah(cat.total),
     `${cat.percentage}%`,

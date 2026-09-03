@@ -2,6 +2,7 @@ import React from 'react';
 import { Transaction } from '../../types';
 import { formatDate, formatRupiah } from '../../lib/utils';
 import { ALL_CATEGORIES } from '../../lib/constants';
+import { CategoryIcon } from '../common/CategoryIcon';
 import { Edit2, Trash2, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
 interface TransactionTableProps {
@@ -65,8 +66,13 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
 
                 {/* Category */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs font-medium text-slate-200">
-                    <span>{cat?.icon || '🏷️'}</span>
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs font-medium text-slate-200">
+                    <CategoryIcon
+                      category={tx.category}
+                      icon={cat?.icon}
+                      size={18}
+                      trigger="hover"
+                    />
                     <span>{tx.category}</span>
                   </div>
                 </td>

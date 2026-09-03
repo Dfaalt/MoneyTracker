@@ -179,7 +179,8 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const catDef = ALL_CATEGORIES.find((c) => c.name.toLowerCase() === catName.toLowerCase());
       list.push({
         category: catName,
-        icon: catDef?.icon || '🏷️',
+        icon: catDef?.icon || 'https://cdn.lordicon.com/nocovwne.json',
+        emoji: catDef?.emoji || '🏷️',
         color: catDef?.color || '#94A3B8',
         total: value.total,
         percentage: totalExpense > 0 ? Math.round((value.total / totalExpense) * 1000) / 10 : 0,

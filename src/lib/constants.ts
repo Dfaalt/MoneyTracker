@@ -1,30 +1,30 @@
 import { Category, Transaction, Budget } from '../types';
 
 export const EXPENSE_CATEGORIES: Category[] = [
-  { id: 'food', name: 'Food', icon: '🍜', type: 'expense', color: '#F97316', bgColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
-  { id: 'transportation', name: 'Transportation', icon: '🚗', type: 'expense', color: '#3B82F6', bgColor: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-  { id: 'drinks', name: 'Drinks', icon: '🥤', type: 'expense', color: '#06B6D4', bgColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
-  { id: 'quota', name: 'Quota', icon: '📱', type: 'expense', color: '#8B5CF6', bgColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
-  { id: 'personal', name: 'Personal', icon: '🛍️', type: 'expense', color: '#EC4899', bgColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20' },
-  { id: 'household', name: 'Household', icon: '🏠', type: 'expense', color: '#EAB308', bgColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' },
-  { id: 'other_expense', name: 'Other', icon: '📦', type: 'expense', color: '#94A3B8', bgColor: 'bg-slate-500/10 text-slate-400 border-slate-500/20' },
+  { id: 'food', name: 'Food', icon: '/icons/french-fries.json', emoji: '🍜', type: 'expense', color: '#F97316', bgColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
+  { id: 'transportation', name: 'Transportation', icon: '/icons/electric-car.json', emoji: '🚗', type: 'expense', color: '#3B82F6', bgColor: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+  { id: 'drinks', name: 'Drinks', icon: '/icons/glass-water.json', emoji: '🥤', type: 'expense', color: '#06B6D4', bgColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
+  { id: 'quota', name: 'Quota', icon: '/icons/wifi.json', emoji: '📱', type: 'expense', color: '#8B5CF6', bgColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+  { id: 'personal', name: 'Personal', icon: '/icons/person-walking.json', emoji: '🛍️', type: 'expense', color: '#EC4899', bgColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20' },
+  { id: 'household', name: 'Household', icon: '/icons/home.json', emoji: '🏠', type: 'expense', color: '#EAB308', bgColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' },
+  { id: 'other_expense', name: 'Other', icon: '/icons/file-pencil.json', emoji: '📦', type: 'expense', color: '#94A3B8', bgColor: 'bg-slate-500/10 text-slate-400 border-slate-500/20' },
 ];
 
 export const INCOME_CATEGORIES: Category[] = [
-  { id: 'salary', name: 'Salary', icon: '💼', type: 'income', color: '#10B981', bgColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-  { id: 'bonus', name: 'Bonus', icon: '🎁', type: 'income', color: '#F59E0B', bgColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
-  { id: 'freelance', name: 'Freelance', icon: '💻', type: 'income', color: '#6366F1', bgColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
-  { id: 'other_income', name: 'Other', icon: '💵', type: 'income', color: '#14B8A6', bgColor: 'bg-teal-500/10 text-teal-400 border-teal-500/20' },
+  { id: 'salary', name: 'Salary', icon: '/icons/lock-dollar.json', emoji: '💼', type: 'income', color: '#10B981', bgColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
+  { id: 'bonus', name: 'Bonus', icon: '/icons/gift.json', emoji: '🎁', type: 'income', color: '#F59E0B', bgColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+  { id: 'freelance', name: 'Freelance', icon: '/icons/stock-market.json', emoji: '💻', type: 'income', color: '#6366F1', bgColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
+  { id: 'other_income', name: 'Other', icon: '/icons/commodity.json', emoji: '💵', type: 'income', color: '#14B8A6', bgColor: 'bg-teal-500/10 text-teal-400 border-teal-500/20' },
 ];
 
 export const ALL_CATEGORIES = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES];
 
 export const QUICK_CATEGORIES = [
-  { label: 'Makanan', categoryName: 'Food', icon: '🍜', type: 'expense' as const },
-  { label: 'Transportasi', categoryName: 'Transportation', icon: '🚗', type: 'expense' as const },
-  { label: 'Minuman', categoryName: 'Drinks', icon: '🥤', type: 'expense' as const },
-  { label: 'Kuota', categoryName: 'Quota', icon: '📱', type: 'expense' as const },
-  { label: 'Kebutuhan', categoryName: 'Household', icon: '🏠', type: 'expense' as const },
+  { label: 'Makanan', categoryName: 'Food', icon: '/icons/french-fries.json', emoji: '🍜', type: 'expense' as const },
+  { label: 'Transportasi', categoryName: 'Transportation', icon: '/icons/electric-car.json', emoji: '🚗', type: 'expense' as const },
+  { label: 'Minuman', categoryName: 'Drinks', icon: '/icons/glass-water.json', emoji: '🥤', type: 'expense' as const },
+  { label: 'Kuota', categoryName: 'Quota', icon: '/icons/wifi.json', emoji: '📱', type: 'expense' as const },
+  { label: 'Kebutuhan', categoryName: 'Household', icon: '/icons/home.json', emoji: '🏠', type: 'expense' as const },
 ];
 
 // Pool of realistic demo transactions

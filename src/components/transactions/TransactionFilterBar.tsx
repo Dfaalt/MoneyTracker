@@ -69,7 +69,7 @@ export const TransactionFilterBar: React.FC<TransactionFilterBarProps> = ({
           <option value="">All Categories</option>
           {ALL_CATEGORIES.map((cat) => (
             <option key={cat.id} value={cat.name}>
-              {cat.icon} {cat.name}
+              {cat.emoji || '🏷️'} {cat.name}
             </option>
           ))}
         </select>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from '../common/Modal';
+import { CategoryIcon } from '../common/CategoryIcon';
 import { useFinance } from '../../context/FinanceContext';
 import { Transaction, TransactionType } from '../../types';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, ALL_CATEGORIES } from '../../lib/constants';
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../../lib/constants';
 import { formatRupiah, parseCurrencyInput } from '../../lib/utils';
 import { parseSmartTransaction } from '../../lib/smartParser';
 import { Check, Calendar, Tag, FileText, ArrowRight, Zap } from 'lucide-react';
@@ -158,12 +159,6 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
 
   const displayAmountNumber = parseInt(amountRaw || '0', 10);
 
-  // Helper to find category icon
-  const getCategoryIcon = (catName: string) => {
-    const found = ALL_CATEGORIES.find((c) => c.name.toLowerCase() === catName.toLowerCase());
-    return found ? found.icon : '🏷️';
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -266,7 +261,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                 <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
                   <span className="text-[10px] text-slate-400 block mb-0.5">Kategori</span>
                   <span className="font-semibold text-white flex items-center gap-1.5">
-                    <span className="text-base">{getCategoryIcon(parsedSmart.category)}</span>
+                    <CategoryIcon category={parsedSmart.category} size={20} trigger="hover" />
                     <span className="truncate">{parsedSmart.category}</span>
                   </span>
                 </div>
@@ -361,7 +356,12 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                           : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:bg-slate-800/50'
                       }`}
                     >
-                      <span className="text-lg">{cat.icon}</span>
+                      <CategoryIcon
+                        category={cat.name}
+                        icon={cat.icon}
+                        size={22}
+                        trigger="hover"
+                      />
                       <span className="text-xs font-semibold truncate flex-1">{cat.name}</span>
                       {isSelected && <Check className="w-3.5 h-3.5 text-emerald-400" />}
                     </button>

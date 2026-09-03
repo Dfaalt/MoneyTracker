@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
 import { formatRupiah } from '../../lib/utils';
+import { CategoryIcon } from '../common/CategoryIcon';
 import { PieChart as PieIcon, FilterX } from 'lucide-react';
 
 export const CategoryDonutChart: React.FC = () => {
@@ -59,7 +60,7 @@ export const CategoryDonutChart: React.FC = () => {
                     return (
                       <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 shadow-xl text-xs space-y-1">
                         <div className="flex items-center gap-1.5 font-bold text-white">
-                          <span>{data.icon}</span>
+                          <CategoryIcon category={data.category} icon={data.icon} size={16} trigger="hover" />
                           <span>{data.category}</span>
                         </div>
                         <div className="text-emerald-400 font-mono font-semibold">
@@ -139,7 +140,7 @@ export const CategoryDonutChart: React.FC = () => {
                     className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                     style={{ backgroundColor: cat.color }}
                   />
-                  <span className="text-base flex-shrink-0">{cat.icon}</span>
+                  <CategoryIcon category={cat.category} icon={cat.icon} size={20} trigger="hover" />
                   <span className="text-xs font-semibold text-slate-200 truncate">{cat.category}</span>
                 </div>
 

@@ -25,6 +25,7 @@ export interface Category {
   id: string;
   name: string;
   icon: string;
+  emoji?: string;
   type: TransactionType;
   color: string;
   bgColor: string;
@@ -52,6 +53,7 @@ export interface FinancialSummary {
 export interface CategorySummary {
   category: string;
   icon: string;
+  emoji?: string;
   color: string;
   total: number;
   percentage: number;
