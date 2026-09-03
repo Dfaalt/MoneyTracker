@@ -13,7 +13,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'icons/*.png'],
       manifest: {
         name: 'Money Tracker - Smart Personal Finance',
-        short_name: 'MoneyTracker',
+        short_name: 'Money Tracker',
         description: 'Aplikasi pencatatan dan monitoring keuangan pribadi modern, cepat, interaktif, dan mudah digunakan.',
         theme_color: '#0B0F17',
         background_color: '#0B0F17',

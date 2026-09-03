@@ -39,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
           </div>
           <div>
             <h1 className="text-lg font-extrabold text-white tracking-tight leading-none">
-              Money<span className="text-emerald-400">Tracker</span>
+              Money <span className="text-emerald-400">Tracker</span>
             </h1>
             <p className="text-[10px] text-slate-400 font-medium mt-0.5 uppercase tracking-wider">
               Smart Finance

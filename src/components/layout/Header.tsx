@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
             <Wallet className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </div>
           <span className="font-extrabold text-white text-sm sm:text-base tracking-tight truncate">
-            Money<span className="text-emerald-400">Tracker</span>
+            Money <span className="text-emerald-400">Tracker</span>
           </span>
         </div>
 
