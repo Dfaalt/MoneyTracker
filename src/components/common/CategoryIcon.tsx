@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { ALL_CATEGORIES } from '../../lib/constants';
+import { Tag } from 'lucide-react';
 
 interface CategoryIconProps {
   category?: string;
@@ -9,7 +10,6 @@ interface CategoryIconProps {
   target?: string;
   colors?: string;
   className?: string;
-  fallbackEmoji?: string;
 }
 
 export const CategoryIcon: React.FC<CategoryIconProps> = ({
@@ -20,7 +20,6 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
   target,
   colors,
   className = '',
-  fallbackEmoji,
 }) => {
   const containerRef = useRef<HTMLSpanElement>(null);
   const iconRef = useRef<any>(null);
@@ -31,7 +30,6 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
     : undefined;
 
   const targetIcon = icon || matchedCategory?.icon || 'https://cdn.lordicon.com/nocovwne.json';
-  const targetEmoji = fallbackEmoji || matchedCategory?.emoji || '🏷️';
 
   const isLordIcon =
     typeof targetIcon === 'string' &&
@@ -107,14 +105,14 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
     );
   }
 
-  // Fallback to text / emoji
+  // Fallback to Tag icon
   return (
     <span
       ref={containerRef}
-      className={`inline-flex items-center justify-center flex-shrink-0 ${className}`}
-      style={{ fontSize: typeof size === 'number' ? `${size * 0.8}px` : size }}
+      className={`inline-flex items-center justify-center flex-shrink-0 text-slate-400 ${className}`}
+      style={{ width: dimension, height: dimension }}
     >
-      {targetIcon || targetEmoji}
+      <Tag className="w-4 h-4" />
     </span>
   );
 };
