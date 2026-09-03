@@ -7,6 +7,7 @@ declare global {
         React.HTMLAttributes<HTMLElement> & {
           src?: string;
           trigger?: 'hover' | 'click' | 'loop' | 'loop-on-hover' | 'morph' | 'in' | 'boomerang' | 'sequence';
+          target?: string;
           delay?: string | number;
           colors?: string;
           state?: string;
@@ -25,6 +26,7 @@ declare global {
           React.HTMLAttributes<HTMLElement> & {
             src?: string;
             trigger?: 'hover' | 'click' | 'loop' | 'loop-on-hover' | 'morph' | 'in' | 'boomerang' | 'sequence';
+            target?: string;
             delay?: string | number;
             colors?: string;
             state?: string;
