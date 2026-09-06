@@ -19,7 +19,9 @@ export const ReportsPage: React.FC = () => {
   const incomeCount = monthlyTransactions.filter(
     (t) => t.type === "income",
   ).length;
-  const avgExpensePerTx = expenseCount > 0 ? summary.expense / expenseCount : 0;
+  const [year, month] = selectedMonth.split("-").map(Number);
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const avgExpensePerDay = daysInMonth > 0 ? summary.expense / daysInMonth : 0;
   const savingsRate =
     summary.income > 0
       ? Math.round(
@@ -72,13 +74,13 @@ export const ReportsPage: React.FC = () => {
 
         <div className="p-5 rounded-2xl glass-card border border-slate-800 space-y-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-            Avg Expense / Trans
+            Avg Expense / Day
           </span>
           <h4 className="text-xl font-bold text-white font-mono">
-            {formatRupiah(avgExpensePerTx)}
+            {formatRupiah(avgExpensePerDay)}
           </h4>
           <p className="text-xs text-slate-400">
-            {expenseCount} transaksi pengeluaran
+            Berdasarkan {daysInMonth} hari bulan ini
           </p>
         </div>
 
