@@ -21,7 +21,13 @@ export const ReportsPage: React.FC = () => {
   ).length;
   const [year, month] = selectedMonth.split("-").map(Number);
   const daysInMonth = new Date(year, month, 0).getDate();
-  const avgExpensePerDay = daysInMonth > 0 ? summary.expense / daysInMonth : 0;
+  const now = new Date();
+  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const isCurrentMonth = selectedMonth === currentMonthStr;
+  const daysElapsed = isCurrentMonth
+    ? Math.min(Math.max(1, now.getDate()), daysInMonth)
+    : daysInMonth;
+  const avgExpensePerDay = daysElapsed > 0 ? summary.expense / daysElapsed : 0;
   const savingsRate =
     summary.income > 0
       ? Math.round(
@@ -80,7 +86,9 @@ export const ReportsPage: React.FC = () => {
             {formatRupiah(avgExpensePerDay)}
           </h4>
           <p className="text-xs text-slate-400">
-            Berdasarkan {daysInMonth} hari bulan ini
+            {isCurrentMonth
+              ? `${daysElapsed} hari berjalan (${daysInMonth} hari bulan ini)`
+              : `Berdasarkan ${daysInMonth} hari bulan ini`}
           </p>
         </div>
 
