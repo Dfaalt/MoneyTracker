@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -16,6 +16,34 @@ import { BarChart3 } from "lucide-react";
 export const DailyExpenseBarChart: React.FC = () => {
   const { dailyExpenseSummaries, selectedMonth } = useFinance();
   const [activeBarIndex, setActiveBarIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Handle auto-dismissal when user taps outside or taps another chart
+  useEffect(() => {
+    const handleChartActivated = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail !== "daily-bar") {
+        setActiveBarIndex(null);
+      }
+    };
+
+    const handlePointerDownOutside = (e: MouseEvent | TouchEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setActiveBarIndex(null);
+      }
+    };
+
+    window.addEventListener("chart-activated", handleChartActivated);
+    document.addEventListener("pointerdown", handlePointerDownOutside);
+
+    return () => {
+      window.removeEventListener("chart-activated", handleChartActivated);
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
+  }, []);
 
   // Filter out days with expenses or keep full month sequence
   const hasExpenses = dailyExpenseSummaries.some((d) => d.expense > 0);
@@ -43,7 +71,10 @@ export const DailyExpenseBarChart: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card space-y-4">
+    <div
+      ref={containerRef}
+      className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card space-y-4"
+    >
       <div>
         <h4 className="text-base font-bold text-white tracking-tight">
           Daily Expense
@@ -58,6 +89,18 @@ export const DailyExpenseBarChart: React.FC = () => {
           <BarChart
             data={dailyExpenseSummaries}
             margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+            onClick={(state) => {
+              if (
+                state &&
+                typeof state.activeTooltipIndex === "number"
+              ) {
+                const idx = state.activeTooltipIndex;
+                setActiveBarIndex((prev) => (prev === idx ? null : idx));
+                window.dispatchEvent(
+                  new CustomEvent("chart-activated", { detail: "daily-bar" })
+                );
+              }
+            }}
           >
             <CartesianGrid
               strokeDasharray="3 3"
@@ -81,11 +124,18 @@ export const DailyExpenseBarChart: React.FC = () => {
             />
             <Tooltip
               cursor={{ fill: "rgba(51, 65, 85, 0.25)" }}
+              active={activeBarIndex !== null ? undefined : false}
+              wrapperStyle={{ zIndex: 40, pointerEvents: "none" }}
               content={({ active, payload }) => {
-                if (active && payload && payload.length) {
+                if (
+                  activeBarIndex !== null &&
+                  active &&
+                  payload &&
+                  payload.length
+                ) {
                   const data = payload[0].payload;
                   return (
-                    <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 shadow-xl text-xs space-y-1">
+                    <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl text-xs space-y-1 backdrop-blur-md">
                       <div className="font-semibold text-slate-300">
                         {data.formattedDate}
                       </div>
@@ -109,7 +159,18 @@ export const DailyExpenseBarChart: React.FC = () => {
             <Bar
               dataKey="expense"
               radius={[4, 4, 0, 0]}
-              onMouseEnter={(_, index) => setActiveBarIndex(index)}
+              onClick={(_, index) => {
+                setActiveBarIndex((prev) => (prev === index ? null : index));
+                window.dispatchEvent(
+                  new CustomEvent("chart-activated", { detail: "daily-bar" })
+                );
+              }}
+              onMouseEnter={(_, index) => {
+                setActiveBarIndex(index);
+                window.dispatchEvent(
+                  new CustomEvent("chart-activated", { detail: "daily-bar" })
+                );
+              }}
               onMouseLeave={() => setActiveBarIndex(null)}
             >
               {dailyExpenseSummaries.map((entry, index) => {

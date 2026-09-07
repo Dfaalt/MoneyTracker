@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import { useFinance } from "../../context/FinanceContext";
 import { formatRupiah } from "../../lib/utils";
@@ -13,6 +13,34 @@ export const CategoryDonutChart: React.FC = () => {
     setDashboardCategoryFilter,
   } = useFinance();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+
+  // Handle auto-dismissal when user taps outside the chart or taps another chart
+  useEffect(() => {
+    const handleChartActivated = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail !== "category-donut") {
+        setActiveIndex(null);
+      }
+    };
+
+    const handlePointerDownOutside = (e: MouseEvent | TouchEvent) => {
+      if (
+        chartContainerRef.current &&
+        !chartContainerRef.current.contains(e.target as Node)
+      ) {
+        setActiveIndex(null);
+      }
+    };
+
+    window.addEventListener("chart-activated", handleChartActivated);
+    document.addEventListener("pointerdown", handlePointerDownOutside);
+
+    return () => {
+      window.removeEventListener("chart-activated", handleChartActivated);
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
+  }, []);
 
   if (categorySummaries.length === 0) {
     return (
@@ -30,12 +58,25 @@ export const CategoryDonutChart: React.FC = () => {
     );
   }
 
-  const handlePieClick = (entry: any) => {
-    if (dashboardCategoryFilter === entry.category) {
-      setDashboardCategoryFilter(null);
-    } else {
-      setDashboardCategoryFilter(entry.category);
+  const handlePieClick = (entry: any, index: number) => {
+    const category =
+      entry?.category ||
+      entry?.payload?.category ||
+      categorySummaries[index]?.category;
+
+    setActiveIndex((prev) => (prev === index ? null : index));
+
+    if (category) {
+      if (dashboardCategoryFilter === category) {
+        setDashboardCategoryFilter(null);
+      } else {
+        setDashboardCategoryFilter(category);
+      }
     }
+
+    window.dispatchEvent(
+      new CustomEvent("chart-activated", { detail: "category-donut" })
+    );
   };
 
   return (
@@ -52,7 +93,10 @@ export const CategoryDonutChart: React.FC = () => {
 
         {dashboardCategoryFilter && (
           <button
-            onClick={() => setDashboardCategoryFilter(null)}
+            onClick={() => {
+              setDashboardCategoryFilter(null);
+              setActiveIndex(null);
+            }}
             className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
           >
             <FilterX className="w-3.5 h-3.5" />
@@ -63,15 +107,26 @@ export const CategoryDonutChart: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
         {/* Donut Chart */}
-        <div className="md:col-span-6 h-56 relative flex items-center justify-center">
+        <div
+          ref={chartContainerRef}
+          className="md:col-span-6 h-56 relative flex items-center justify-center"
+        >
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
+                active={activeIndex !== null ? undefined : false}
+                wrapperStyle={{ zIndex: 40, pointerEvents: "none" }}
                 content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    const data = payload[0].payload;
+                  if (
+                    activeIndex !== null &&
+                    active &&
+                    payload &&
+                    payload.length
+                  ) {
+                    const data =
+                      categorySummaries[activeIndex] || payload[0].payload;
                     return (
-                      <div className="p-3 rounded-xl bg-slate-900/95 border border-slate-700 shadow-xl text-xs space-y-1">
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl text-xs space-y-1 backdrop-blur-md">
                         <div className="flex items-center gap-1.5 font-bold text-white">
                           <CategoryIcon
                             category={data.category}
@@ -102,13 +157,22 @@ export const CategoryDonutChart: React.FC = () => {
                 paddingAngle={4}
                 dataKey="total"
                 nameKey="category"
-                onClick={handlePieClick}
-                onMouseEnter={(_, index) => setActiveIndex(index)}
+                activeIndex={activeIndex ?? undefined}
+                onClick={(entry, index) => handlePieClick(entry, index)}
+                onMouseEnter={(_, index) => {
+                  setActiveIndex(index);
+                  window.dispatchEvent(
+                    new CustomEvent("chart-activated", {
+                      detail: "category-donut",
+                    })
+                  );
+                }}
                 onMouseLeave={() => setActiveIndex(null)}
                 cursor="pointer"
               >
                 {categorySummaries.map((entry, index) => {
-                  const isSelected = dashboardCategoryFilter === entry.category;
+                  const isSelected =
+                    dashboardCategoryFilter === entry.category;
                   const isHovered = activeIndex === index;
                   return (
                     <Cell
@@ -130,8 +194,14 @@ export const CategoryDonutChart: React.FC = () => {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Center Info in Donut */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          {/* Center Info in Donut - Fades out smoothly when slice is active to prevent overlapping */}
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-all duration-200 z-0 ${
+              activeIndex !== null
+                ? "opacity-0 scale-90"
+                : "opacity-100 scale-100"
+            }`}
+          >
             <span className="text-[11px] text-slate-400 uppercase font-semibold">
               Total
             </span>
@@ -148,9 +218,12 @@ export const CategoryDonutChart: React.FC = () => {
             return (
               <div
                 key={cat.category}
-                onClick={() =>
-                  setDashboardCategoryFilter(isSelected ? null : cat.category)
-                }
+                onClick={() => {
+                  const nextSelected = isSelected ? null : cat.category;
+                  setDashboardCategoryFilter(nextSelected);
+                  // Dismiss floating tooltip so it doesn't get stuck over the chart
+                  setActiveIndex(null);
+                }}
                 className={`flex items-center justify-between p-2 rounded-xl cursor-pointer transition-all ${
                   isSelected
                     ? "bg-slate-800 border border-slate-700 shadow-sm"
