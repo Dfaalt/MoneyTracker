@@ -1,6 +1,6 @@
 import React from "react";
 import { useFinance } from "../context/FinanceContext";
-import { formatRupiah, formatMonthYear } from "../lib/utils";
+import { formatRupiah, formatMonthYear, isRentTransaction } from "../lib/utils";
 import { CategoryDonutChart } from "../components/dashboard/CategoryDonutChart";
 import { DailyExpenseBarChart } from "../components/dashboard/DailyExpenseBarChart";
 import { ExportDropdown } from "../components/common/ExportDropdown";
@@ -27,7 +27,15 @@ export const ReportsPage: React.FC = () => {
   const daysElapsed = isCurrentMonth
     ? Math.min(Math.max(1, now.getDate()), daysInMonth)
     : daysInMonth;
-  const avgExpensePerDay = daysElapsed > 0 ? summary.expense / daysElapsed : 0;
+
+  // Hitung total pengeluaran kos/sewa untuk dikecualikan dari rata-rata harian
+  const rentExpenseTotal = monthlyTransactions
+    .filter((t) => t.type === "expense" && isRentTransaction(t))
+    .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+  const dailyOperatingExpense = Math.max(0, summary.expense - rentExpenseTotal);
+  const avgExpensePerDay =
+    daysElapsed > 0 ? dailyOperatingExpense / daysElapsed : 0;
   const savingsRate =
     summary.income > 0
       ? Math.round(
@@ -90,6 +98,11 @@ export const ReportsPage: React.FC = () => {
               ? `${daysElapsed} hari berjalan (${daysInMonth} hari bulan ini)`
               : `Berdasarkan ${daysInMonth} hari bulan ini`}
           </p>
+          {rentExpenseTotal > 0 && (
+            <p className="text-[11px] text-amber-400/90 font-medium flex items-center gap-1 pt-0.5">
+              <span>* Di luar kos/sewa ({formatRupiah(rentExpenseTotal)})</span>
+            </p>
+          )}
         </div>
 
         <div className="p-5 rounded-2xl glass-card border border-slate-800 space-y-2">

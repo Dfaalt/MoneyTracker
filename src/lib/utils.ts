@@ -234,3 +234,37 @@ export function getBudgetStatusConfig(status: BudgetStatusLevel) {
       };
   }
 }
+
+/**
+ * Detect whether a transaction is a fixed rent / boarding house (kos/kontrakan) expense
+ * based on category or description keywords.
+ */
+export function isRentTransaction(tx: {
+  category?: string;
+  description?: string;
+}): boolean {
+  const cat = (tx.category || "").toLowerCase().trim();
+  const desc = (tx.description || "").toLowerCase().trim();
+
+  // Explicit category check
+  const rentCategories = [
+    "kos",
+    "kost",
+    "kosan",
+    "rent",
+    "sewa",
+    "sewa kos",
+    "sewa rumah",
+    "kontrakan",
+  ];
+  if (rentCategories.includes(cat)) {
+    return true;
+  }
+
+  // Description keywords check with word boundaries
+  // Matches 'kos', 'kost', 'kosan', 'kontrakan' as standalone words, or phrases like 'bayar kos', 'uang kos', 'sewa kamar/rumah/kost'
+  const rentPattern =
+    /\b(kos|kost|kosan|kontrakan)\b|bayar\s+kos|uang\s+kos|sewa\s+(kamar|rumah|tempat|kos|kost)/i;
+
+  return rentPattern.test(desc) || rentPattern.test(cat);
+}
