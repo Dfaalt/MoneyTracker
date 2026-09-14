@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -10,13 +10,29 @@ import {
   Cell,
 } from "recharts";
 import { useFinance } from "../../context/FinanceContext";
-import { formatRupiah } from "../../lib/utils";
-import { BarChart3 } from "lucide-react";
+import { formatRupiah, formatDate, isRentTransaction } from "../../lib/utils";
+import { BarChart3, Home } from "lucide-react";
+import { DailyExpenseSummary } from "../../types";
 
 export const DailyExpenseBarChart: React.FC = () => {
-  const { dailyExpenseSummaries, selectedMonth } = useFinance();
+  const { dailyExpenseSummaries, selectedMonth, monthlyTransactions } =
+    useFinance();
   const [activeBarIndex, setActiveBarIndex] = useState<number | null>(null);
+  const [excludeRent, setExcludeRent] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Detect rent / boarding house transactions this month
+  const rentExpenses = useMemo(() => {
+    return monthlyTransactions.filter(
+      (t) => t.type === "expense" && isRentTransaction(t),
+    );
+  }, [monthlyTransactions]);
+
+  const totalRentAmount = useMemo(() => {
+    return rentExpenses.reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+  }, [rentExpenses]);
+
+  const hasRent = rentExpenses.length > 0;
 
   // Handle auto-dismissal when user taps outside or taps another chart
   useEffect(() => {
@@ -45,24 +61,92 @@ export const DailyExpenseBarChart: React.FC = () => {
     };
   }, []);
 
-  // Filter out days with expenses or keep full month sequence
-  const hasExpenses = dailyExpenseSummaries.some((d) => d.expense > 0);
+  // Compute daily chart data with or without rent
+  const chartData = useMemo<DailyExpenseSummary[]>(() => {
+    if (!hasRent || !excludeRent) {
+      return dailyExpenseSummaries;
+    }
+
+    const [year, month] = selectedMonth.split("-").map(Number);
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    const dayMap = new Map<
+      number,
+      { expense: number; income: number; count: number }
+    >();
+
+    monthlyTransactions.forEach((tx) => {
+      // Exclude rent expenses when toggle is active
+      if (tx.type === "expense" && isRentTransaction(tx)) {
+        return;
+      }
+
+      const dayNum = parseInt(tx.transaction_date.split("-")[2], 10);
+      const prev = dayMap.get(dayNum) || { expense: 0, income: 0, count: 0 };
+      const amt = Number(tx.amount) || 0;
+      if (tx.type === "expense") {
+        prev.expense += amt;
+      } else {
+        prev.income += amt;
+      }
+      prev.count += 1;
+      dayMap.set(dayNum, prev);
+    });
+
+    const result: DailyExpenseSummary[] = [];
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dayStr = String(d).padStart(2, "0");
+      const dateStr = `${selectedMonth}-${dayStr}`;
+      const data = dayMap.get(d) || { expense: 0, income: 0, count: 0 };
+
+      result.push({
+        date: dateStr,
+        dayLabel: String(d),
+        formattedDate: formatDate(dateStr, "short"),
+        expense: data.expense,
+        income: data.income,
+        count: data.count,
+      });
+    }
+
+    return result;
+  }, [
+    hasRent,
+    excludeRent,
+    dailyExpenseSummaries,
+    monthlyTransactions,
+    selectedMonth,
+  ]);
+
+  // Check if there are any expenses to display
+  const hasExpenses = chartData.some((d) => d.expense > 0);
 
   if (!hasExpenses) {
     return (
-      <div className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card flex flex-col items-center justify-center min-h-[340px] text-center">
-        <div className="p-3 rounded-2xl bg-slate-800/80 text-slate-400 mb-3">
+      <div className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card flex flex-col items-center justify-center min-h-[340px] text-center space-y-3">
+        <div className="p-3 rounded-2xl bg-slate-800/80 text-slate-400">
           <BarChart3 className="w-6 h-6" />
         </div>
-        <h4 className="text-base font-bold text-white mb-1">Daily Expense</h4>
+        <h4 className="text-base font-bold text-white">Daily Expense</h4>
         <p className="text-xs text-slate-400 max-w-xs">
-          Belum ada data pengeluaran harian pada bulan ini.
+          {hasRent && excludeRent
+            ? `Pengeluaran bulan ini hanya berupa biaya kos (${formatRupiah(totalRentAmount)}).`
+            : "Belum ada data pengeluaran harian pada bulan ini."}
         </p>
+        {hasRent && excludeRent && (
+          <button
+            type="button"
+            onClick={() => setExcludeRent(false)}
+            className="text-xs text-rose-400 hover:text-rose-300 underline font-medium cursor-pointer"
+          >
+            Tampilkan transaksi kos di grafik
+          </button>
+        )}
       </div>
     );
   }
 
-  // Format Y-axis ticks e.g. Rp20k, Rp40k, Rp60k as in PRD Section 8.15
+  // Format Y-axis ticks e.g. Rp20k, Rp40k, Rp60k
   const formatYAxis = (tick: number) => {
     if (tick === 0) return "0";
     if (tick >= 1000000) return `Rp${(tick / 1000000).toFixed(0)}M`;
@@ -75,29 +159,67 @@ export const DailyExpenseBarChart: React.FC = () => {
       ref={containerRef}
       className="rounded-2xl glass-card p-6 border border-slate-800 shadow-card space-y-4"
     >
-      <div>
-        <h4 className="text-base font-bold text-white tracking-tight">
-          Daily Expense
-        </h4>
-        <p className="text-xs text-slate-400">
-          Tren pengeluaran harian sepanjang {selectedMonth}
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <h4 className="text-base font-bold text-white tracking-tight">
+              Daily Expense
+            </h4>
+            {hasRent && excludeRent && (
+              <span className="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2 py-0.5 rounded-full font-medium">
+                Tanpa Kos
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-slate-400">
+            Tren pengeluaran harian sepanjang {selectedMonth}
+          </p>
+        </div>
+
+        {hasRent && (
+          <button
+            type="button"
+            onClick={() => {
+              setExcludeRent((prev) => !prev);
+              setActiveBarIndex(null);
+            }}
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 border cursor-pointer select-none self-start sm:self-auto ${
+              excludeRent
+                ? "bg-rose-500/10 border-rose-500/30 text-rose-300 hover:bg-rose-500/20 shadow-sm shadow-rose-950/40"
+                : "bg-slate-800/80 border-slate-700 text-slate-400 hover:text-slate-200"
+            }`}
+            title={
+              excludeRent
+                ? `Kos (${formatRupiah(totalRentAmount)}) dikecualikan agar grafik harian tidak jomplang. Klik untuk menyertakan.`
+                : "Kos disertakan. Klik untuk mengecualikan kos dari grafik."
+            }
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span>{excludeRent ? "Kecualikan Kos" : "Sertakan Kos"}</span>
+            <div
+              className={`w-7 h-4 rounded-full transition-colors duration-200 p-0.5 flex items-center ${
+                excludeRent
+                  ? "bg-rose-500 justify-end"
+                  : "bg-slate-700 justify-start"
+              }`}
+            >
+              <div className="w-3 h-3 rounded-full bg-white shadow-sm" />
+            </div>
+          </button>
+        )}
       </div>
 
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={dailyExpenseSummaries}
+            data={chartData}
             margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
             onClick={(state) => {
-              if (
-                state &&
-                typeof state.activeTooltipIndex === "number"
-              ) {
+              if (state && typeof state.activeTooltipIndex === "number") {
                 const idx = state.activeTooltipIndex;
                 setActiveBarIndex((prev) => (prev === idx ? null : idx));
                 window.dispatchEvent(
-                  new CustomEvent("chart-activated", { detail: "daily-bar" })
+                  new CustomEvent("chart-activated", { detail: "daily-bar" }),
                 );
               }
             }}
@@ -173,14 +295,18 @@ export const DailyExpenseBarChart: React.FC = () => {
               }}
               onMouseLeave={() => setActiveBarIndex(null)}
             >
-              {dailyExpenseSummaries.map((entry, index) => {
+              {chartData.map((entry, index) => {
                 const isHovered = activeBarIndex === index;
                 const hasValue = entry.expense > 0;
                 return (
                   <Cell
                     key={`bar-${index}`}
                     fill={
-                      hasValue ? (isHovered ? "#F43F5E" : "#E11D48") : "#1E293B"
+                      hasValue
+                        ? isHovered
+                          ? "#F43F5E"
+                          : "#E11D48"
+                        : "#1E293B"
                     }
                     opacity={hasValue ? (isHovered ? 1 : 0.85) : 0.2}
                     cursor={hasValue ? "pointer" : "default"}

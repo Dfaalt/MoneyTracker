@@ -251,6 +251,7 @@ export function isRentTransaction(tx: {
     "kos",
     "kost",
     "kosan",
+    "kostan",
     "rent",
     "sewa",
     "sewa kos",
@@ -262,9 +263,9 @@ export function isRentTransaction(tx: {
   }
 
   // Description keywords check with word boundaries
-  // Matches 'kos', 'kost', 'kosan', 'kontrakan' as standalone words, or phrases like 'bayar kos', 'uang kos', 'sewa kamar/rumah/kost'
+  // Matches 'kos', 'kost', 'kosan', 'kostan', 'kontrakan' as standalone words, or phrases like 'bayar kos', 'uang kos', 'sewa kamar/rumah/kost'
   const rentPattern =
-    /\b(kos|kost|kosan|kontrakan)\b|bayar\s+kos|uang\s+kos|sewa\s+(kamar|rumah|tempat|kos|kost)/i;
+    /\b(kos|kost|kosan|kostan|kontrakan)\b|bayar\s+kos|uang\s+kos|sewa\s+(kamar|rumah|tempat|kos|kost)/i;
 
   return rentPattern.test(desc) || rentPattern.test(cat);
 }
